@@ -1,20 +1,42 @@
-<ion-header [translucent]="true">
-  <ion-toolbar>
-    <ion-title>
-      Blank
-    </ion-title>
-  </ion-toolbar>
-</ion-header>
+<!-- <div class="over-flow-h"> -->
+  <div class="main-container">
+    <div class="logo">
+      <img src="assets/images/cimar-logo-1.svg">
+    </div>
 
-<ion-content [fullscreen]="true">
-  <ion-header collapse="condense">
-    <ion-toolbar>
-      <ion-title size="large">Blank</ion-title>
-    </ion-toolbar>
-  </ion-header>
+    <!-- Hamburger -->
+    <nav class="menu--right" role="navigation">
+      <div class="menuToggle">
+        <input type="checkbox" />
+        <span class="burger-one"></span>
+        <span class="burger-two"></span>
+        <span class="burger-thre"></span>
+        <ul class="menuItem">
+          <div class="menu-logo">
+            <img src="assets/images/cimar-logo-1.svg">
+          </div>
+          <div class="border-seperation"></div>
+          <li (click)="NavigateTo('home/appointment-cards')"><i class="fa-regular fa-calendar-check" ></i><a >Appointments</a></li>
+          <li (click)="NavigateTo('home/leave-request-form')"><i class="fa-regular fa-calendar" ></i><a >Leave Request</a></li>
+          <li><i class="fa-solid fa-right-from-bracket" (click)="LogOut()"></i><a >Logout</a></li>
+        </ul>
+      </div>
+    </nav>
+    <!-- Hamburger -->
 
-  <div id="container">
-    <strong>Ready to create an app?</strong>
-    <p>Start with Ionic <a target="_blank" rel="noopener noreferrer" href="https://ionicframework.com/docs/components">UI Components</a></p>
+    <!-- Appointment card -->
+<div style="overflow: auto;">
+    <router-outlet></router-outlet>
   </div>
-</ion-content>
+
+  </div>
+  <footer>
+    <div class="f-left">
+      <h6>&#169; 2023 <a href="https://www.remedihms.com/" target="_blank">REMEDIHMS.com</a></h6>
+
+    </div>
+    <div class="f-right">
+      <h6>Powered by<a href="https://tedsystech.com/" target="_blank">Tedsys Technologies</a></h6>
+    </div>
+  </footer>
+<!-- </div> -->

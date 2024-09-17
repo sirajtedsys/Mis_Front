@@ -8,8 +8,13 @@ const routes: Routes = [
   },
   {
     path: '',
-    redirectTo: 'home',
+    redirectTo: 'login',
     pathMatch: 'full'
+  },
+
+  {
+    path: 'login',
+    loadChildren: () => import('./shared/login/login.module').then( m => m.LoginPageModule)
   },
 ];
 

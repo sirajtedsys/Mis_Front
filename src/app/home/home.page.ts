@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-home',
@@ -7,6 +8,20 @@ import { Component } from '@angular/core';
 })
 export class HomePage {
 
-  constructor() {}
+  constructor(private router:Router) {}
+
+
+  NavigateTo(url:any)
+  {
+    this.router.navigate([url])
+
+  }
+
+  LogOut(){
+    localStorage.removeItem('type')
+    localStorage.removeItem('Branch')
+    this.router.navigate(['login'])
+
+  }
 
 }

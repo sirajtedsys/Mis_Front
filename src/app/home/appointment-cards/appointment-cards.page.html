@@ -1,0 +1,333 @@
+
+<!-- <div class="over-flow-h"> -->
+  <div class="appointment-cards">
+
+
+    <form action="#">
+      <div class="leave-body">
+    
+        <div class="leave-date d-flex">
+          <div class="date-speration">
+            <span>From</span>
+    
+    
+            <input type="date" name="check-in" id="check-in" [max]="Today" [(ngModel)]="fromdate" placeholder="From">
+    
+    
+          </div>
+          <div class="date-speration">
+            <span>To</span>
+            <input type="date" name="check-in" id="check-out"[min]="fromdate" [max]="Today" [(ngModel)]="todate" placeholder="To">
+          </div>
+        </div>
+        <div class="leave-submt">
+          <input type="submit" (click)="GetReport()" value="Submit">
+        </div>
+        
+      </div>
+   
+    </form>
+
+  <div class="row mt-2">
+    <!-- Card 1 -->
+     <!-- 9 -->
+    <div class="col-lg-4">
+      <div class="card app-cards">
+        <h5>Appointments</h5>
+        <div class="app-det">
+          <span>Token</span>
+          <span>{{TokenTotal}}</span>
+        </div>
+        <div class="app-det">
+          <span>New Booking</span>
+          <span >{{NewBooked}}</span>
+        </div>
+        <div class="app-det">
+          <span>Revisit Booked</span>
+          <span>{{RevisitBooked}}</span>
+        </div>
+        <div class="app-det">
+          <span>Revisit visited</span>
+          <span>{{RevisitVisited}}</span>
+        </div>
+        <div class="app-det">
+          <span>New visit</span>
+          <span>{{NewVisited}}</span>
+        </div>
+      </div>
+    </div>
+    <!-- Card 2 -->
+
+    <!-- Card 3 -->
+
+    <!-- 1 -->
+    <div class="col-lg-4" *ngIf="DsIpRevProcedureAsyncdata.length>0">
+      <div class="card app-cards">
+        <h5>IP Income</h5>
+        <div class="app-det" *ngFor="let items of DsIpRevProcedureAsyncdata;let i=index">
+          <span>{{items.GP}}</span>
+          <span>{{items.AMOUNT==null?0:items.AMOUNT}}</span>
+        </div>
+      
+      </div>
+    </div>
+
+    <!-- 2 -->
+    <div class="col-lg-4" *ngIf="DsPurchaseProcedureAsyncdata.length>0">
+      <div class="card app-cards">
+        <h5>Purchase Details</h5>
+        <div class="app-det" *ngFor="let items of DsPurchaseProcedureAsyncdata;let i=index">
+          <span>{{items.GP}}</span>
+          <span>{{items.BILL_CNT==null?'':items.BILL_CNT}}</span>
+          <span class="border-left border-dark">{{items.AMOUNT==null?0:items.AMOUNT}}</span>
+          
+        </div>
+      
+      </div>
+    </div>
+
+
+    <!-- 4 -->
+    <div class="col-lg-4" *ngIf="DsProcCategoryProcedureAsyncDATA.length>0">
+      <div class="card app-cards">
+        <h5>Category wise Revenue</h5>
+        <div class="app-det" *ngFor="let items of DsProcCategoryProcedureAsyncDATA;let i=index">
+          <!-- <span>{{items.PRCCAT_ID}}</span> -->
+          <SPAn>{{items.PRCCAT_NAME}}</SPAn>
+          <!-- <span>{{items.BILL_CNT==null?'':items.BILL_CNT}}</span> -->
+          <span>{{items.NETAMOUNT==null?0:items.NETAMOUNT}}</span>
+          
+        </div>
+      
+      </div>
+    </div>
+
+    <!-- 5 -->
+    <div class="col-lg-4" *ngIf="DsProcGroupProcedureAsyncdata.length>0">
+      <div class="card app-cards">
+        <h5>Group Wise Revenue</h5>
+        <div class="app-det" *ngFor="let items of DsProcGroupProcedureAsyncdata;let i=index">
+          <!-- <span>{{items.PRC_GRP_ID}}</span> -->
+          <SPAn>{{items.PRC_GRP_NAME}}</SPAn>
+          <!-- <span>{{items.BILL_CNT==null?'':items.BILL_CNT}}</span> -->
+          <span >{{items.NETAMOUNT==null?0:items.NETAMOUNT}}</span>
+          
+        </div>
+      
+      </div>
+    </div>
+
+    <!-- 6 -->
+    <div class="col-lg-4" *ngIf="DsProcedureProcedureAsyncDATA.length>0">
+      <div class="card app-cards">
+        <h5>Procedure Wise Revenue</h5>
+        <div class="app-det" *ngFor="let items of DsProcedureProcedureAsyncDATA;let i=index">
+          <!-- <span>{{items.PRC_ID}}</span> -->
+          <SPAn>{{items.PRC_NAME}}</SPAn>
+          <!-- <span>{{items.BILL_CNT==null?'':items.BILL_CNT}}</span> -->
+          <span >{{items.NETAMOUNT==null?0:items.NETAMOUNT}}</span>
+          
+        </div>
+      
+      </div>
+    </div>
+
+    <!-- 3 -->
+    <div class="col-lg-4" *ngIf="DsDoctRevProcedureAsyncevProcedureAsyncdata.length>0">
+      <div class="card app-cards">
+        <h5>Doctor Wise Revenue</h5>
+        <div class="app-det" *ngFor="let items of DsDoctRevProcedureAsyncevProcedureAsyncdata;let i=index">
+          <span>{{items.DOCTOR}}</span>
+          <!-- <span>{{items.BILL_CNT==null?'':items.BILL_CNT}}</span> -->
+          <span>{{items.TOTAL==null?0:items.TOTAL}}</span>
+          
+        </div>
+      
+      </div>
+    </div>
+
+    <!-- 8 -->
+    <div class="col-lg-4" *ngIf="CallCollectionProcedureAsyncdata.length>0">
+      <div class="card app-cards">
+        <h5>Collection</h5>
+        <div class="app-det">
+          <span>Cash</span>
+          <span>{{CallCollectionProcedureAsyncdata[0].Cash}}</span>
+        </div>
+        <div class="app-det">
+          <span>Credit</span>
+          <span>{{CallCollectionProcedureAsyncdata[0].Credit}}</span>
+        </div>
+        <div class="app-det">
+          <span>CreditCard</span>
+          <span>{{CallCollectionProcedureAsyncdata[0].CreditCard}}</span>
+        </div>
+        <div class="app-det">
+          <span>OT</span>
+          <span>{{CallCollectionProcedureAsyncdata[0].OT}}</span>
+        </div>
+        <div class="app-det">
+          <span>Insurance</span>
+          <span>{{CallCollectionProcedureAsyncdata[0].Insurance}}</span>
+        </div>
+        <div class="app-det">
+          <span>Cheque  </span>
+          <span>{{CallCollectionProcedureAsyncdata[0].Cheque}}</span>
+        </div>
+        <div class="app-det">
+          <span>BWallet</span>
+          <span>{{CallCollectionProcedureAsyncdata[0].BWallet}}</span>
+        </div>
+        <div class="app-det">
+          <span>Total</span>
+          <span>{{CallCollectionProcedureAsyncdata[0].Total}}</span>
+        </div>
+     
+      </div>
+    </div>
+
+     <!-- 11 -->
+     <div class="col-lg-4" *ngIf="CallPackageProcedureAsyncdata.length>0">
+      <div class="card app-cards">
+        <h5>Package Wise Revenue</h5>
+        <div class="app-det" *ngFor="let items of CallPackageProcedureAsyncdata;let i=index">
+          <!-- <span>{{items.PRC_ID}}</span> -->
+          <SPAn>{{items.Section}}</SPAn>
+          <!-- <span>{{items.BILL_CNT==null?'':items.BILL_CNT}}</span> -->
+          <span >{{items.PackageAmount==null?0:items.PackageAmount}}</span>
+          
+        </div>
+      
+      </div>
+    </div>
+
+     <!-- 10 -->
+     <div class="col-lg-4" *ngIf="CallPurchaseOrderProcedureAsyncdata.length>0">
+      <div class="card app-cards">
+        <h5>Purchase Order Details</h5>
+        <div class="app-det" *ngFor="let items of CallPurchaseOrderProcedureAsyncdata;let i=index">
+          <span>{{items.GP}}</span>
+          <span>{{items.BILL_CNT==null?'':items.BILL_CNT}}</span>
+          <span class="border-left border-dark">{{items.AMOUNT==null?0:items.AMOUNT}}</span>
+          
+        </div>
+      
+      </div>
+    </div>
+
+      <!-- 12 -->
+      <div class="col-lg-4" *ngIf="spInsRevProcedureAsyncdata.length>0">
+        <div class="card app-cards">
+          <h5>Insurance Revenue</h5>
+          <div class="app-det" *ngFor="let items of spInsRevProcedureAsyncdata;let i=index">
+            <!-- <span>{{items.PRCCAT_ID}}</span> -->
+            <SPAn>{{items.PRVD_NAME}}</SPAn>
+            <!-- <span>{{items.BILL_CNT==null?'':items.BILL_CNT}}</span> -->
+            <span>{{items.INS_AMT==null?0:items.INS_AMT}}</span>
+            
+          </div>
+        
+        </div>
+      </div>
+
+       <!-- 13 -->
+       <div class="col-lg-4" *ngIf="CallDeptRevProcedureAsyncdata.length>0">
+        <div class="card app-cards">
+          <h5>Department Revenue</h5>
+          <div class="app-det" *ngFor="let items of CallDeptRevProcedureAsyncdata;let i=index">
+            <!-- <span>{{items.PRCCAT_ID}}</span> -->
+            <SPAn>{{items.SPETY_NAME}}</SPAn>
+            <!-- <span>{{items.BILL_CNT==null?'':items.BILL_CNT}}</span> -->
+            <span>{{items.TOTAL==null?0:items.TOTAL}}</span>
+            
+          </div>
+        
+        </div>
+      </div>
+
+      <!-- {
+        "FreeNo": 58,
+        "RevisitNo": 108,
+        "NewNo": 1,
+        "PrcNo": 5,
+        "PayType": "Cash",
+        "Total": 172
+    } -->
+
+<!-- 14 -->
+
+<div class="col-lg-6" *ngIf="sp_ds_op_stsdata.length>0">
+  <div class="card app-cards">
+    <h5>Visit Statistics</h5>
+    <div class="app-det">
+      <span>New</span>
+      <span class="border-dark border-left">Free</span>
+      <span class="border-dark border-left">Revisit</span>      
+      <span class="border-dark border-left">Procedure</span>
+      <span class="border-dark border-left">PayType</span>      
+      <span class="border-dark border-left">Total</span>
+      <!-- <span></span> -->
+    </div>
+    <div class="app-det" *ngFor="let items of sp_ds_op_stsdata;let i = index">
+      <span>{{items.NewNo}}</span>
+      <span class="border-dark border-left">{{items.FreeNo}}</span>
+      <span class="border-dark border-left">{{items.RevisitNo}}</span>      
+      <span class="border-dark border-left">{{items.PrcNo}}</span>
+      <span class="border-dark border-left">{{items.PayType}}</span>      
+      <span class="border-dark border-left">{{items.Total}}</span>
+
+    </div>
+    
+  </div>
+</div>
+
+<!-- {
+  "GP": "REFUND",
+  "Cash": null,
+  "Credit": null,
+  "CreditCard": null,
+  "OT": null,
+  "Insurance": null,
+  "Cheque": null,
+  "BWallet": null,
+  "Total": null
+} -->
+
+<!-- 7 -->
+
+<div class="col-lg-12" *ngIf="CallCollectionSctProcedureAsyncdata.length>0">
+  <div class="card app-cards">
+    <h5>Section Wise Collection</h5>
+    <div class="app-det">
+      <span>GP</span>
+      <span class="border-dark border-left">Cash</span>
+      <span class="border-dark border-left">Credit</span>      
+      <span class="border-dark border-left">CreditCard</span>
+      <span class="border-dark border-left">OT</span>     
+      <span class="border-dark border-left">Insurance</span>
+      <span class="border-dark border-left">Cheque</span>
+      <span class="border-dark border-left">BWallet</span> 
+      <span class="border-dark border-left">Total</span>
+      <!-- <span></span> -->
+    </div>
+    <div class="app-det" *ngFor="let items of CallCollectionSctProcedureAsyncdata;let i = index">
+      
+      <span>{{items.GP}}</span>
+      <span class="border-dark border-left">{{items.Cash}}</span>      
+      <span class="border-dark border-left">{{items.Credit}}</span>
+      <span class="border-dark border-left">{{items.CreditCard}}</span>            
+      <span class="border-dark border-left">{{items.OT}}</span>
+      <span class="border-dark border-left">{{items.Insurance}}</span>        
+      <span class="border-dark border-left">{{items.Cheque}}</span>
+      <span class="border-dark border-left">{{items.BWallet}}</span>  
+      <span class="border-dark border-left">{{items.Total}}</span>
+
+    </div>
+    
+  </div>
+</div>
+ 
+
+  </div>
+</div>
+<!-- </div> -->

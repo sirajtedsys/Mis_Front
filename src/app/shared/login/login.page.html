@@ -1,0 +1,57 @@
+<div class="login-page over-flow-h">
+  <div class="round-shape"></div>
+  <div class="main-container">
+    <div class="logo">
+      <img src="assets/images/cimar-logo-1.svg">
+    </div>
+    <div class="banner">
+      <h1>Doctor's
+        Login</h1>
+      <img src="assets/images/doctors.png">
+    </div>
+    <div class="form-sec">
+      <form action="#">
+        <div class="form-inp-body d-flex w-100">
+          <div class="form-logo">
+            <i class="fa-regular fa-user"></i>
+          </div>
+          <div class="form-input">
+            <input type="email" name="email" [(ngModel)]="Username" placeholder="Email id" class="w-100" required>
+          </div>
+        </div>
+        <div class="form-inp-body d-flex w-100">
+          <div class="form-logo">
+            <i class="fa-solid fa-lock"></i>
+          </div>
+          <div class="form-input">
+            <input type="password" name="Password" [(ngModel)]="Password" placeholder="Password" class="w-100" required>
+          </div>
+        </div>
+        <div class="form-inp-body d-flex w-100" *ngIf="BranchList.length!=0">
+          <div class="form-logo">
+            <i class="fa-solid fa-stethoscope"></i>
+          </div>
+          <div class="form-drpdwn" >
+            <select class="login-select" id="exampleFormControlSelect1" name="Branch" [(ngModel)]="Branch">
+              <option disabled value="0">Branches</option>
+              <option [value]="items.BRCH_ID" *ngFor="let items of BranchList;let i = index" >{{items.BRCH_NAME}}</option>
+            </select>
+          </div>
+        </div>
+        <!-- <a class="forgot-pass" href="#">Forgot Password?</a> -->
+        <input type="submit" *ngIf="BranchList.length==0"  (click)="Submit()" value="Login" class="login-btn">
+        <input type="submit" *ngIf="BranchList.length>0" (click)="continue()" value="Continue" class="login-btn">
+      </form>
+    </div>
+  </div>
+
+  <footer>
+    <div class="f-left">
+      <h6>&#169; 2023 <a href="https://www.remedihms.com/" target="_blank">REMEDIHMS.com</a></h6>
+
+    </div>
+    <div class="f-right">
+      <h6>Powered by <a href="https://tedsystech.com/" target="_blank">Tedsys Technologies</a></h6>
+    </div>
+  </footer>
+</div>
