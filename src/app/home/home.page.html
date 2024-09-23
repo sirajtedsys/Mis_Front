@@ -1,7 +1,7 @@
 <!-- <div class="over-flow-h"> -->
   <div class="main-container">
-    <div class="logo">
-      <img src="assets/images/cimar-logo-1.svg">
+    <div class="logo" >
+      <img style="height: 80px;" src="assets/images/logo.jpg">
     </div>
 
     <!-- Hamburger -->
@@ -13,12 +13,12 @@
         <span class="burger-thre"></span>
         <ul class="menuItem">
           <div class="menu-logo">
-            <img src="assets/images/cimar-logo-1.svg">
+            <img src="assets/images/logo.jpg">
           </div>
           <div class="border-seperation"></div>
-          <li (click)="NavigateTo('home/appointment-cards')"><i class="fa-regular fa-calendar-check" ></i><a >Appointments</a></li>
-          <li (click)="NavigateTo('home/leave-request-form')"><i class="fa-regular fa-calendar" ></i><a >Leave Request</a></li>
-          <li><i class="fa-solid fa-right-from-bracket" (click)="LogOut()"></i><a >Logout</a></li>
+          <li (click)="NavigateTo('home/appointment-cards')"><i class="fa-regular fa-calendar-check" ></i><a >Reports</a></li>
+          <!-- <li (click)="NavigateTo('home/leave-request-form')"><i class="fa-regular fa-calendar" ></i><a >Leave Request</a></li> -->
+          <li  (click)="LogOut()"><i class="fa-solid fa-right-from-bracket"></i><a >Logout</a></li>
         </ul>
       </div>
     </nav>

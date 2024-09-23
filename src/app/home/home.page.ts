@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-home',
@@ -18,6 +19,27 @@ export class HomePage {
   }
 
   LogOut(){
+    Swal.fire({
+      title: 'Are you sure?',
+      text: "Do you want to Logout!",
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'LogOut!'
+  }).then((result) => {
+      if (result.isConfirmed) {
+          // Call your delete service here
+          this.LogOutMethod()
+          
+      }
+  });
+
+  }
+
+  LogOutMethod(){
+
+
     localStorage.removeItem('type')
     localStorage.removeItem('Branch')
     this.router.navigate(['login'])

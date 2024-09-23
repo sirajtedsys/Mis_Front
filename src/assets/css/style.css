@@ -328,7 +328,8 @@ html {
 /* Appointment card */
 .appointment-cards {
   padding-top: 50px;
-  height: 100vh;
+  /* height: 100vh; */
+  overflow-x: hidden;
 }
 .app-det {
   display: flex;
@@ -647,7 +648,7 @@ footer h6 a:hover {
   color: #0000009e;
   height: 40px;
   position: relative;
-  z-index: 10;
+  /* z-index: 10; */
   background-color: transparent;
   border: #4a5564 solid 1px;
   border-radius: 4px;

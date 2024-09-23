@@ -411,6 +411,26 @@ CallPackageProcedureAsync(fromd:string,tod:string)
   );
 }
 
+// CallReferalReportProcedureAsync
+CallReferalReportProcedureAsync(fromd:string,tod:string) 
+{
+
+  this.GetDecryptedData()
+  let headers = new HttpHeaders();
+  headers.set("Accept", 'application/json');
+  headers.set('Content-Type', 'application/json');
+  headers = headers.set('Authorization', 'Bearer ' + this.decryptiondata); 
+  let options ={ headers: headers };
+  return this.http.get(this.appconfig.url + '/Common/CallReferalReportProcedureAsync?fromd='+fromd+'&tod='+tod, options)
+  .pipe(
+    
+    catchError((error: any) => {
+      // Handle the error here or rethrow it as needed
+      console.error('Error in CallReferalReportProcedureAsync:', error);
+      return throwError(error); // Rethrow the error
+    })
+  );
+}
 
 
 

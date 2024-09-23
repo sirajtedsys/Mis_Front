@@ -49,6 +49,13 @@ ReportVisited: number=0;//9
   spInsRevProcedureAsyncdata: any[]=[] //12;
   CallDeptRevProcedureAsyncdata: any[]=[]//13;
   sp_ds_op_stsdata:any[]=[] //14
+  stsdataTotal: any;
+  stsdataPayType: any;
+  stsdataRevisitNo: any;
+  stsdataFreeNo: any;
+  stsdataNew: any;
+  stsdataPrcNo: any;
+  CallReferalReportProcedureAsyncdata: any[]=[]//15;
 
 
   constructor(
@@ -102,6 +109,7 @@ ReportVisited: number=0;//9
             this.CallCollectionSctProcedureAsync()
             this.CallPackageProcedureAsync()
             this.CallPurchaseOrderProcedureAsync()
+            this.CallReferalReportProcedureAsync()
             // this.CallDeptRevProcedureAsync()
   
           }
@@ -192,6 +200,14 @@ ReportVisited: number=0;//9
       {
         console.log(data,'spdsopsts//14');
         this.sp_ds_op_stsdata=data
+
+        this.stsdataNew = data[0].NewNo
+        this.stsdataFreeNo = data[0].FreeNo
+        this.stsdataRevisitNo = data[0].RevisitNo
+        this.stsdataPrcNo= data[0].PrcNo
+        this.stsdataPayType = data[0].PayType
+        this.stsdataTotal = data[0].Total
+        // this.stsdataNew = data[0].NewNo
      
         
       }
@@ -565,6 +581,34 @@ ReportVisited: number=0;//9
    
  
   }
+
+   //15
+   async CallReferalReportProcedureAsync()
+   {
+ 
+     const loading = await this.loader.create({
+       cssClass: 'custom-loading', // Optional: Apply custom CSS class for styling
+       message: 'Loading...', // Optional: Custom message
+       spinner: 'dots', // Optional: Choose a spinner
+       // duration: 2000 // Optional: Set a duration after which the loader will automatically dismiss
+     });
+     await loading.present();
+ 
+     this.comser.CallReferalReportProcedureAsync(this.fromdate,this.todate).subscribe((data:any)=>{
+       loading.dismiss()
+       if(data)
+       {
+         console.log(data,'CallReferalReportProcedureAsync////15');
+         this.CallReferalReportProcedureAsyncdata=data
+         
+       }
+     },
+   (error:any)=>{
+     loading.dismiss()
+   })
+    
+  
+   }
 
   
 
