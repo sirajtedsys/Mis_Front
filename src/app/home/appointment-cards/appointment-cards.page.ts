@@ -610,6 +610,10 @@ ReportVisited: number=0;//9
   
    }
 
+   calculateTotal(items: any, key: string): number {
+    return items.reduce((acc:any, item:any) => acc + (item[key] || 0), 0);
+}
+
   
 
 
