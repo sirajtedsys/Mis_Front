@@ -6,6 +6,7 @@ import { AuthService } from './auth.service';
 import { LoadingController } from '@ionic/angular';
 import { DatePipe } from '@angular/common';
 import { AppConfig } from 'src/class/AppConfig';
+import { Router } from '@angular/router';
 
 @Injectable({
   providedIn: 'root'
@@ -17,7 +18,7 @@ export class CommonService {
   
 
   constructor(private http:HttpClient,private authser:AuthService,private loadingCtrl:LoadingController,
-    private datePipe:DatePipe,) { }
+    private datePipe:DatePipe,private router:Router) { }
   isLoading:boolean=false
   async presentLoading() {
     this.isLoading = true;
@@ -31,6 +32,16 @@ export class CommonService {
 
     // Uncomment below line to auto-hide the loader after 2 seconds (duration)
     // setTimeout(() => loading.dismiss(), 2000);
+  }
+
+  CheckForUnAuthorised(error:any){
+    if(error.status==401)
+    {
+      // window.location.reload()
+      localStorage.clear()
+      this.router.navigate(['login'])
+    }
+
   }
 
   async dismissLoading() {
@@ -132,8 +143,31 @@ GetAllBranches()
   .pipe(
     
     catchError((error: any) => {
+      this.CheckForUnAuthorised(error)
       // Handle the error here or rethrow it as needed
       console.error('Error in GetAllUserBranches:', error);
+      return throwError(error); // Rethrow the error
+    })
+  );
+}
+
+GetAppMenuAsync() 
+{
+
+  this.GetDecryptedData()
+  let headers = new HttpHeaders();
+  headers.set("Accept", 'application/json');
+  headers.set('Content-Type', 'application/json');
+  headers = headers.set('Authorization', 'Bearer ' + this.decryptiondata); 
+  let options ={ headers: headers };
+  return this.http.get(this.appconfig.url + '/Common/GetAppMenuAsync', options)
+  .pipe(
+    
+    catchError((error: any) => {
+      this.CheckForUnAuthorised(error)
+      
+      // Handle the error here or rethrow it as needed
+      console.error('Error in GetAppMenuAsync:', error);
       return throwError(error); // Rethrow the error
     })
   );
@@ -152,6 +186,7 @@ CallPurchaseOrderProcedureAsync(fromd:string,tod:string)
   .pipe(
     
     catchError((error: any) => {
+      this.CheckForUnAuthorised(error)
       // Handle the error here or rethrow it as needed
       console.error('Error in CallPurchaseOrderProcedureAsync:', error);
       return throwError(error); // Rethrow the error
@@ -172,6 +207,7 @@ SP_DS_APPNMNT_STS(fromd:string,tod:string)
   .pipe(
     
     catchError((error: any) => {
+      this.CheckForUnAuthorised(error)
       // Handle the error here or rethrow it as needed
       console.error('Error in SP_DS_APPNMNT_STS:', error);
       return throwError(error); // Rethrow the error
@@ -191,6 +227,7 @@ sp_ds_op_sts(fromd:string,tod:string)
   .pipe(
     
     catchError((error: any) => {
+      this.CheckForUnAuthorised(error)
       // Handle the error here or rethrow it as needed
       console.error('Error in SP_DS_APPNMNT_STS:', error);
       return throwError(error); // Rethrow the error
@@ -210,6 +247,7 @@ CallDeptRevProcedureAsync(fromd:string,tod:string)
   .pipe(
     
     catchError((error: any) => {
+      this.CheckForUnAuthorised(error)
       // Handle the error here or rethrow it as needed
       console.error('Error in CallDeptRevProcedureAsync:', error);
       return throwError(error); // Rethrow the error
@@ -230,6 +268,7 @@ DsDoctRevProcedureAsync(fromd:string,tod:string)
   .pipe(
     
     catchError((error: any) => {
+      this.CheckForUnAuthorised(error)
       // Handle the error here or rethrow it as needed
       console.error('Error in DsDoctRevProcedureAsync:', error);
       return throwError(error); // Rethrow the error
@@ -250,6 +289,7 @@ spInsRevProcedureAsync(fromd:string,tod:string)
   .pipe(
     
     catchError((error: any) => {
+      this.CheckForUnAuthorised(error)
       // Handle the error here or rethrow it as needed
       console.error('Error in spInsRevProcedureAsync:', error);
       return throwError(error); // Rethrow the error
@@ -270,6 +310,7 @@ DsIpRevProcedureAsync(fromd:string,tod:string)
   .pipe(
     
     catchError((error: any) => {
+      this.CheckForUnAuthorised(error)
       // Handle the error here or rethrow it as needed
       console.error('Error in DsIpRevProcedureAsync:', error);
       return throwError(error); // Rethrow the error
@@ -289,6 +330,7 @@ DsProcCategoryProcedureAsync(fromd:string,tod:string)
   .pipe(
     
     catchError((error: any) => {
+      this.CheckForUnAuthorised(error)
       // Handle the error here or rethrow it as needed
       console.error('Error in DsProcCategoryProcedureAsync:', error);
       return throwError(error); // Rethrow the error
@@ -308,6 +350,7 @@ DsProcGroupProcedureAsync(fromd:string,tod:string)
   .pipe(
     
     catchError((error: any) => {
+      this.CheckForUnAuthorised(error)
       // Handle the error here or rethrow it as needed
       console.error('Error in DsProcGroupProcedureAsync:', error);
       return throwError(error); // Rethrow the error
@@ -327,6 +370,7 @@ DsProcedureProcedureAsync(fromd:string,tod:string)
   .pipe(
     
     catchError((error: any) => {
+      this.CheckForUnAuthorised(error)
       // Handle the error here or rethrow it as needed
       console.error('Error in DsProcedureProcedureAsync:', error);
       return throwError(error); // Rethrow the error
@@ -346,6 +390,7 @@ DsPurchaseProcedureAsync(fromd:string,tod:string)
   .pipe(
     
     catchError((error: any) => {
+      this.CheckForUnAuthorised(error)
       // Handle the error here or rethrow it as needed
       console.error('Error in DsPurchaseProcedureAsync:', error);
       return throwError(error); // Rethrow the error
@@ -366,6 +411,7 @@ CallCollectionSctProcedureAsync(fromd:string,tod:string,branchid:string)
   .pipe(
     
     catchError((error: any) => {
+      this.CheckForUnAuthorised(error)
       // Handle the error here or rethrow it as needed
       console.error('Error in CallCollectionSctProcedureAsync:', error);
       return throwError(error); // Rethrow the error
@@ -385,6 +431,7 @@ CallCollectionProcedureAsync(fromd:string,tod:string,branchid:string)
   .pipe(
     
     catchError((error: any) => {
+      this.CheckForUnAuthorised(error)
       // Handle the error here or rethrow it as needed
       console.error('Error in CallCollectionProcedureAsync:', error);
       return throwError(error); // Rethrow the error
@@ -404,6 +451,8 @@ CallPackageProcedureAsync(fromd:string,tod:string)
   .pipe(
     
     catchError((error: any) => {
+      // this.CheckForUnAuthorised(error)
+      this.CheckForUnAuthorised(error)
       // Handle the error here or rethrow it as needed
       console.error('Error in CallPackageProcedureAsync:', error);
       return throwError(error); // Rethrow the error
@@ -425,6 +474,7 @@ CallReferalReportProcedureAsync(fromd:string,tod:string)
   .pipe(
     
     catchError((error: any) => {
+      this.CheckForUnAuthorised(error)
       // Handle the error here or rethrow it as needed
       console.error('Error in CallReferalReportProcedureAsync:', error);
       return throwError(error); // Rethrow the error

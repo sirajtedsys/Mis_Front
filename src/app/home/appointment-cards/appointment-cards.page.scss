@@ -5,3 +5,16 @@
   .app-cards .table-bordered th {
     border: 1px solid #000000;
   }
+
+  .small-table {
+    font-size: 12px; /* Adjust the table font size */
+  }
+  
+  .small-col {
+    width: 15%; /* Adjust the column width */
+  }
+  
+  .table-bordered th, .table-bordered td {
+    padding: 2px 10px; /* Reduce padding to make columns smaller */
+  }
+

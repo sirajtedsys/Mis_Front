@@ -86,8 +86,8 @@ export class LoginPage implements OnInit {
               if(this.BranchList.length==1 )
               {
                 
-     let encryptcode =  this.authser.Encrypt(this.BranchList[0])
-     localStorage.setItem('Branch',JSON.stringify(encryptcode))
+                let encryptcode =  this.authser.Encrypt(this.BranchList[0])
+                localStorage.setItem('Branch',JSON.stringify(encryptcode))
                 const Toast = Swal.mixin({
                   toast: true,
                   position: "top-end",
@@ -108,6 +108,10 @@ export class LoginPage implements OnInit {
               else if(this.BranchList.length>1)
               {
                 Swal.fire('Select a Branch to continue','','info')
+              }
+              else if(this.BranchList.length==0 || this.BranchList == null)
+              {
+                Swal.fire('No branches found','Contact Administrator','error')
               }
               else
               {

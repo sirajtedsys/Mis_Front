@@ -58,6 +58,9 @@ ReportVisited: number=0;//9
   CallReferalReportProcedureAsyncdata: any[]=[]//15;
 
 
+  PriorityData:any[]=[]
+
+
   constructor(
 
     private comser:CommonService,
@@ -69,6 +72,7 @@ ReportVisited: number=0;//9
     this.Today = this.datepipe.transform(new Date(), 'yyyy-MM-dd');
     this.fromdate=this.Today
     this.todate=this.Today
+    this.GetUserPreference()
     this.GetReport()
 
     // this.CallCollectionProcedureAsyncdata = [{
@@ -86,6 +90,49 @@ ReportVisited: number=0;//9
 
   ngOnInit() {
   }
+
+
+
+
+  InnerHtmlTables(){
+
+    let AppointmnetStatics = `
+  <div class="col-lg-4 my-1">
+    <div class="card app-cards">
+      <h5>Appointments</h5>
+      <div class="app-det">
+        <span>TOKEN</span>
+        <span>{{TokenTotal}}</span>
+      </div>
+      <div class="app-det">
+        <span>NEW BOOKING</span>
+        <span>{{NewBooked}}</span>
+      </div>
+      <div class="app-det">
+        <span>REVISIT BOOKED</span>
+        <span>{{RevisitBooked}}</span>
+      </div>
+      <div class="app-det">
+        <span>REVISIT VISITED</span>
+        <span>{{RevisitVisited}}</span>
+      </div>
+      <div class="app-det">
+        <span>NEW VISIT</span>
+        <span>{{NewVisited}}</span>
+      </div>
+    </div>
+  </div>
+`;
+
+
+
+// Now you can use htmlContent as innerHTML in JavaScript or TypeScript
+    // document.getElementById("tableview").innerHTML = htmlContent;
+
+
+  }
+  
+  
 
   GetReport(){
 
@@ -131,7 +178,153 @@ ReportVisited: number=0;//9
       }
 
   }
+
+  async GetUserPreference() {
+    const loading = await this.loader.create({
+      cssClass: 'custom-loading',
+      message: 'Loading...',
+      spinner: 'dots',
+    });
+    await loading.present();
   
+    this.comser.GetAppMenuAsync().subscribe(
+      (data: any) => {
+        loading.dismiss();
+        console.log(JSON.parse(JSON.stringify(data)),'untouched priorit');
+        // data.splice(8, 1);
+  
+        if (data && Array.isArray(data)) {
+          // Assign priorities
+          if (data.length > 9 && data[9]) {
+            data[9].Priority = 1;
+          }
+          if (data.length > 14 && data[14]) {
+            data[14].Priority = 2;
+          }
+          if (data.length > 10 && data[10]) {
+            data[10].Priority = 3;
+          }
+  
+          // Filter and sort data
+          let data1 = data.filter((item: any) => item && typeof item.Priority == 'undefined' || item.Priority == null);
+          data = data.filter((item: any) => item && typeof item.Priority !== 'undefined' && item.Priority != null);
+  
+          // Sort the data based on Priority
+          data = data.sort((a: any, b: any) => a.Priority - b.Priority);
+          data.push(...data1); // Append unprioritized items at the end
+  
+          this.PriorityData = data;
+          console.log(this.PriorityData,"priority data");
+          
+        }
+      },
+      (error: any) => {
+        loading.dismiss();
+      }
+    );
+  }
+  
+
+  VIewPerPriorityORder(LinkName:any){
+    if(this.PriorityData.length>0)
+    {
+      let Priority = this.PriorityData.find((x:any)=>x.Link == LinkName)
+      return Priority
+    }
+
+  }
+
+  // CheckTheReportRight(link:any){
+  //   if(this.PriorityData.length>0)
+  //   {
+  //     return this.PriorityData.some((x:any)=>x.Link == link)
+  //   }
+  //   else
+  //   {
+  //     return false
+  //   }
+
+  // }
+  
+// {
+//   [
+//     {
+//         "TabName": "Package wise Revenue",
+//         "Link": "PACKAGEWISE_REVENUE",
+//         "Priority": 1
+//     },
+//     {
+//         "TabName": "Visit Statistics",
+//         "Link": "VISIT_STATISTICS",
+//         "Priority": 2
+//     },
+//     {
+//         "TabName": "Procedure wise Revenue",
+//         "Link": "PROCEDUREWISE_REVENUE",
+//         "Priority": 3
+//     },
+//     {
+//         "TabName": "Appointment Statistics",
+//         "Link": "APPOINTMENT_STATISTICS",
+//         "Priority": null
+//     },
+//     {
+//         "TabName": "Category wise Revenue",
+//         "Link": "CATEGORYWISE_REVENUE",
+//         "Priority": null
+//     },
+//     {
+//         "TabName": "Collection",
+//         "Link": "COLLECTION",
+//         "Priority": null
+//     },
+//     {
+//         "TabName": "Department Revenue",
+//         "Link": "DEPARTMENT_REVENUE",
+//         "Priority": null
+//     },
+//     {
+//         "TabName": "Doctor References",
+//         "Link": "DOCTOR_REFERENCES",
+//         "Priority": null
+//     },
+//     {
+//         "TabName": "Doctor wise Revenue",
+//         "Link": "DOCTORWISE_REVENUE",
+//         "Priority": null
+//     },
+//     {
+//         "TabName": "Group wise Revenue",
+//         "Link": "GROUPWISE_REVENUE",
+//         "Priority": null
+//     },
+//     {
+//         "TabName": "IP Income",
+//         "Link": "IP_INCOME",
+//         "Priority": null
+//     },
+//     {
+//         "TabName": "Insurance Receivables",
+//         "Link": "INSURANCE_RECEIVABLES",
+//         "Priority": null
+//     },
+//     {
+//         "TabName": "Purchase Details",
+//         "Link": "PURCHASE_DETAILS",
+//         "Priority": null
+//     },
+//     {
+//         "TabName": "Purchase Order Details",
+//         "Link": "PURCHASE_ORDER_DETAILS",
+//         "Priority": null
+//     },
+//     {
+//         "TabName": "Section wise Collections",
+//         "Link": "SECTIONWISE_COLLECTIONS",
+//         "Priority": null
+//     }
+// ]
+// }
   async AppointmentReport()
   {
   

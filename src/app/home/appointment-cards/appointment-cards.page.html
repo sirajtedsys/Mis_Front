@@ -28,699 +28,357 @@
    
     </form>
 
-  <div class="row mt-2">
-    <!-- Card 1 -->
-     <!-- 9 -->
-    <div class="col-lg-4 my-1">
-      <div class="card app-cards">
-        <h5>Appointments</h5>
-        <div class="app-det">
-          <span>Token</span>
-          <span>{{TokenTotal}}</span>
-        </div>
-        <div class="app-det">
-          <span>New Booking</span>
-          <span >{{NewBooked}}</span>
-        </div>
-        <div class="app-det">
-          <span>Revisit Booked</span>
-          <span>{{RevisitBooked}}</span>
-        </div>
-        <div class="app-det">
-          <span>Revisit visited</span>
-          <span>{{RevisitVisited}}</span>
-        </div>
-        <div class="app-det">
-          <span>New visit</span>
-          <span>{{NewVisited}}</span>
-        </div>
-      </div>
-    </div>
-
-
-
-    
-
-<!-- 13,11 -->
-     <div class="col-lg-4 my-1">
-      <div class="row">
-    <!-- 11 -->
-      <div class="col-lg-12 my-1" *ngIf="CallPackageProcedureAsyncdata.length>0">
-        <div class="card app-cards">
-          <h5>Package Wise Revenue</h5>
-          <div class="app-det" *ngFor="let items of CallPackageProcedureAsyncdata;let i=index">
-            <!-- <span>{{items.PRC_ID}}</span> -->
-            <SPAn>{{items.Section}}</SPAn>
-            <!-- <span>{{items.BILL_CNT==null?'':items.BILL_CNT}}</span> -->
-            <span class="text-right">{{items.PackageAmount==null?'0.00':(items.PackageAmount| number: '1.2-2')}}</span>
-            
-          </div>
-        
-        </div>
-      </div>
-        <!-- 13 -->
-        <div class="col-lg-12 my-1" *ngIf="CallDeptRevProcedureAsyncdata.length>0">
+    <div class="row mt-2" *ngIf="PriorityData.length > 0">
+      <ng-container *ngFor="let item of PriorityData">
+        <div     [ngClass]="{
+          'col-lg-6': item.Link === 'CATEGORYWISE_REVENUE' || item.Link === 'PROCEDUREWISE_REVENUE'|| item.Link === 'DOCTOR_REFERENCES'|| item.Link === 'GROUPWISE_REVENUE',
+          'col-lg-4': item.Link !== 'CATEGORYWISE_REVENUE' || item.Link !== 'PROCEDUREWISE_REVENUE'|| item.Link !== 'DOCTOR_REFERENCES'|| item.Link !== 'GROUPWISE_REVENUE'
+        }"
+      >
           <div class="card app-cards">
-            <h5>Department Revenue</h5>
-            <div class="app-det" *ngFor="let items of CallDeptRevProcedureAsyncdata;let i=index">
-              <!-- <span>{{items.PRCCAT_ID}}</span> -->
-              <SPAn>{{items.SPETY_NAME}}</SPAn>
-              <!-- <span>{{items.BILL_CNT==null?'':items.BILL_CNT}}</span> -->
-              <span class="text-right">{{items.TOTAL==null?'0.00':(items.TOTAL| number: '1.2-2')}}</span>
+            <h5>{{ item.TabName }}</h5>
+            
+            <!-- Render based on Link type -->
+            <ng-container [ngSwitch]="item.Link">
               
-            </div>
-          
-          </div>
-        </div>
-      </div>
-     </div>
-   
-  <!-- 14 -->
-  <div class="col-lg-4 my-1" *ngIf="sp_ds_op_stsdata.length>0">
-    <div class="card app-cards">
-      <h5>Visit Statistics</h5>
-      <div class="app-det">
-        <span>New</span>
-        <span>{{stsdataNew}}</span>
-      </div>
-      <div class="app-det">
-        <span>Free</span>
-        <span >{{stsdataFreeNo}}</span>
-      </div>
-      <div class="app-det">
-        <span>Revisit </span>
-        <span>{{stsdataRevisitNo}}</span>
-      </div>
-      <div class="app-det">
-        <span>Procedure</span>
-        <span>{{stsdataPrcNo}}</span>
-      </div>
-      <div class="app-det">
-        <span>PayType</span>
-        <span>{{stsdataPayType}}</span>
-      </div>
-      <div class="app-det">
-        <span>Total</span>
-        <span>{{stsdataTotal}}</span>
-      </div>
-    </div>
-  </div>
-   
-  <!-- 2,8, -->
-<div class="col-lg-4">
-  <div class="row">
-      <!-- 2 -->
-      <div class="col-lg-12 my-1" *ngIf="DsPurchaseProcedureAsyncdata.length>0">
-        <div class="card app-cards">
-          <h5>Purchase Details</h5>
-          <div class="app-det" *ngFor="let items of DsPurchaseProcedureAsyncdata;let i=index">
-            <span>{{items.GP}}</span>
-            <span>{{items.BILL_CNT==null?'':items.BILL_CNT}}</span>
-            <span class="border-left border-dark text-right">{{items.AMOUNT==null?'0.00':(items.AMOUNT| number: '1.2-2')}}</span>
-            
-          </div>
-          <div class="app-det">
-            <span class="font-weight-bold">Total</span>
-            <span class="font-weight-bold" >{{calculateTotal(DsPurchaseProcedureAsyncdata,'BILL_CNT')}}</span>
-            <span class="text-right font-weight-bold border-left border-dark">{{calculateTotal(DsPurchaseProcedureAsyncdata,'AMOUNT') | number : '1.2-2'}}</span>
-          </div>
+              <ng-container *ngSwitchCase="'APPOINTMENT_STATISTICS'" >
+                <div class="app-det">
+                  <span>TOKEN</span>
+                  <span>{{ TokenTotal }}</span>
+                </div>
+                <div class="app-det">
+                  <span>NEW BOOKING</span>
+                  <span>{{ NewBooked }}</span>
+                </div>
+                <div class="app-det">
+                  <span>REVISIT BOOKED</span>
+                  <span>{{ RevisitBooked }}</span>
+                </div>
+                <div class="app-det">
+                  <span>REVISIT VISITED</span>
+                  <span>{{ RevisitVisited }}</span>
+                </div>
+                <div class="app-det">
+                  <span>NEW VISIT</span>
+                  <span>{{ NewVisited }}</span>
+                </div>
+              </ng-container>
+    
+              <ng-container *ngSwitchCase="'PACKAGEWISE_REVENUE'">
+                <div class="app-det"  *ngFor="let items of CallPackageProcedureAsyncdata">
+                  <span>{{ items.Section }}</span>
+                  <span class="text-right">{{ items.PackageAmount == null ? '0.00' : (items.PackageAmount | number: '1.2-2') }}</span>
+                </div>
+              </ng-container>
+    
+              <ng-container *ngSwitchCase="'DEPARTMENT_REVENUE'">
+                <div class="app-det" *ngFor="let items of CallDeptRevProcedureAsyncdata">
+                  <span>{{ items.SPETY_NAME }}</span>
+                  <span class="text-right">{{ items.TOTAL == null ? '0.00' : (items.TOTAL | number: '1.2-2') }}</span>
+                </div>
+              </ng-container>
+    
+              <ng-container *ngSwitchCase="'VISIT_STATISTICS'">
+                <div class="app-det">
+                  <span>NEW</span>
+                  <span>{{ stsdataNew }}</span>
+                </div>
+                <div class="app-det">
+                  <span>FREE</span>
+                  <span>{{ stsdataFreeNo }}</span>
+                </div>
+                <div class="app-det">
+                  <span>REVISIT</span>
+                  <span>{{ stsdataRevisitNo }}</span>
+                </div>
+                <div class="app-det">
+                  <span>PROCEDURE</span>
+                  <span>{{ stsdataPrcNo }}</span>
+                </div>
+                <div class="app-det">
+                  <span class="font-weight-bold">TOTAL</span>
+                  <span class="font-weight-bold">{{ stsdataTotal }}</span>
+                </div>
+              </ng-container>
 
-        
-        </div>
-      </div>
-     <!-- 8 -->
-     <div class="col-lg-12 my-1" *ngIf="CallCollectionProcedureAsyncdata.length>0">
-      <div class="card app-cards">
-        <h5>Collection</h5>
-        <div class="app-det">
-          <span>Cash</span>
-          <span class="text-right">{{CallCollectionProcedureAsyncdata[0].Cash | number: '1.2-2'}}</span>
-        </div>
-        <div class="app-det">
-          <span>Credit</span>
-          <span class="text-right">{{CallCollectionProcedureAsyncdata[0].Credit| number: '1.2-2'}}</span>
-        </div>
-        <div class="app-det">
-          <span>CreditCard</span>
-          <span  class="text-right">{{CallCollectionProcedureAsyncdata[0].CreditCard| number: '1.2-2'}}</span>
-        </div>
-        <div class="app-det">
-          <span>OT</span>
-          <span class="text-right">{{CallCollectionProcedureAsyncdata[0].OT| number: '1.2-2'}}</span>
-        </div>
-        <div class="app-det">
-          <span>Insurance</span>
-          <span class="text-right">{{CallCollectionProcedureAsyncdata[0].Insurance| number: '1.2-2'}}</span>
-        </div>
-        <div class="app-det">
-          <span>Cheque  </span>
-          <span class="text-right">{{CallCollectionProcedureAsyncdata[0].Cheque| number: '1.2-2'}}</span>
-        </div>
-        <div class="app-det">
-          <span>BWallet</span>
-          <span class="text-right">{{CallCollectionProcedureAsyncdata[0].BWallet| number: '1.2-2'}}</span>
-        </div>
-        <div class="app-det">
-          <span>Total</span>
-          <span class="text-right">{{CallCollectionProcedureAsyncdata[0].Total| number: '1.2-2'}}</span>
-        </div>
-     
-      </div>
-    </div>
-  </div>
-</div>
-  
-<!-- 3,10 -->
- <div class="col-lg-4">
-  <div class="row">
-       <!-- 3 -->
-       <div class="col-lg-12 my-1" *ngIf="DsDoctRevProcedureAsyncevProcedureAsyncdata.length>0">
-        <div class="card app-cards">
-          <h5>Doctor Wise Revenue</h5>
-          <div class="app-det" *ngFor="let items of DsDoctRevProcedureAsyncevProcedureAsyncdata;let i=index">
-            <span>{{items.DOCTOR}}</span>
-            <!-- <span>{{items.BILL_CNT==null?'':items.BILL_CNT}}</span> -->
-            <span class="text-right">{{items.TOTAL==null?'0.00':(items.TOTAL | number: '1.2-2')}}</span>
-            
-          </div>
-        
-        </div>
-      </div>
-       <!-- 10 -->
-       <div class="col-lg-12 my-1" *ngIf="CallPurchaseOrderProcedureAsyncdata.length>0">
-        <div class="card app-cards">
-          <h5>Purchase Order Details</h5>
-          <div class="app-det" *ngFor="let items of CallPurchaseOrderProcedureAsyncdata;let i=index">
-            <span>{{items.GP}}</span>
-            <span>{{items.BILL_CNT==null?'0':items.BILL_CNT}}</span>
-            <span class="border-left border-dark text-right">{{items.AMOUNT==null?'0.00':(items.AMOUNT| number: '1.2-2') }}</span>
-            
-          </div>
-          <div class="app-det">
-            <span class="font-weight-bold">Total</span>
-            <span class="font-weight-bold" >{{calculateTotal(CallPurchaseOrderProcedureAsyncdata,'BILL_CNT')}}</span>
-            <span class="text-right font-weight-bold border-left border-dark">{{calculateTotal(CallPurchaseOrderProcedureAsyncdata,'AMOUNT') | number : '1.2-2'}}</span>
-          </div>
-        
-        </div>
-      </div>
+              <ng-container *ngSwitchCase="'DOCTORWISE_REVENUE'">
+                <div class="app-det" *ngFor="let items of DsDoctRevProcedureAsyncevProcedureAsyncdata;let i=index">
+                  <span>{{items.DOCTOR}}</span>
+                  <!-- <span>{{items.BILL_CNT==null?'':items.BILL_CNT}}</span> -->
+                  <span class="text-right">{{items.TOTAL==null?'0.00':(items.TOTAL | number: '1.2-2')}}</span>
+                  
+                </div>
+              </ng-container>
 
-        <!-- 12 -->
-        <div class="col-lg-4 m-1" *ngIf="spInsRevProcedureAsyncdata.length>0">
-          <div class="card app-cards">
-            <h5>Insurance Revenue</h5>
-            <div class="app-det" *ngFor="let items of spInsRevProcedureAsyncdata;let i=index">
-              <!-- <span>{{items.PRCCAT_ID}}</span> -->
-              <SPAn>{{items.PRVD_NAME}}</SPAn>
-              <!-- <span>{{items.BILL_CNT==null?'':items.BILL_CNT}}</span> -->
-              <span class="text-right">{{items.INS_AMT==null?'0.00':(items.INS_AMT | number: '1.2-2')}}</span>
+              <!-- <ng-container *ngif="CheckTheReportRight('INSURANCE_RECEIVABLES')"> -->
+                <ng-container *ngSwitchCase="'INSURANCE_RECEIVABLES'">
+                  <div class="app-det" *ngFor="let items of spInsRevProcedureAsyncdata;let i=index">
               
-            </div>
-          
+                    <SPAn>{{items.PRVD_NAME}}</SPAn>
+                    <span class="text-right">{{items.INS_AMT==null?'0.00':(items.INS_AMT | number: '1.2-2')}}</span>
+                    
+                  </div>
+                  
+                </ng-container>
+              <!-- </ng-container> -->
+
+
+              <ng-container *ngSwitchCase="'IP_INCOME'">
+                <div class="app-det">
+                  <span class="font-weight-bold"> NAME</span>
+                  <SPAn class="font-weight-bold text-center">COUNT</SPAn>
+                  <SPAn class="font-weight-bold border-left border-dark text-right">AMOUNT</SPAn>
+                </div>
+                <div class="app-det" *ngFor="let items of CallPurchaseOrderProcedureAsyncdata;let i=index">
+                  <span>{{items.GP | uppercase}}</span>
+                  <span class="text-center  ">{{items.BILL_CNT==null?'0':items.BILL_CNT}}</span>
+                  <span class="border-left border-dark text-right">{{items.AMOUNT==null?'0.00':(items.AMOUNT| number: '1.2-2') }}</span>    
+                </div>
+                <div class="app-det">
+                  <span class="font-weight-bold">TOTAL</span>
+                  <span class="font-weight-bold text-center" >{{calculateTotal(CallPurchaseOrderProcedureAsyncdata,'BILL_CNT')}}</span>
+                  <span class="text-right font-weight-bold border-left border-dark">{{calculateTotal(CallPurchaseOrderProcedureAsyncdata,'AMOUNT') | number : '1.2-2'}}</span>
+                </div> 
+              </ng-container>
+
+
+
+              <ng-container *ngSwitchCase="'PURCHASE_ORDER_DETAILS'">
+                <div class="app-det">
+                  <span class="font-weight-bold"> NAME</span>
+                  <SPAn class="font-weight-bold text-center">COUNT</SPAn>
+                  <SPAn class="font-weight-bold border-left border-dark text-right">AMOUNT</SPAn>
+                </div>
+                <div class="app-det" *ngFor="let items of CallPurchaseOrderProcedureAsyncdata;let i=index">
+                  <span>{{items.GP | uppercase}}</span>
+                  <span class="text-center  ">{{items.BILL_CNT==null?'0':items.BILL_CNT}}</span>
+                  <span class="border-left border-dark text-right">{{items.AMOUNT==null?'0.00':(items.AMOUNT| number: '1.2-2') }}</span>    
+                </div>
+                <div class="app-det">
+                  <span class="font-weight-bold">TOTAL</span>
+                  <span class="font-weight-bold text-center" >{{calculateTotal(CallPurchaseOrderProcedureAsyncdata,'BILL_CNT')}}</span>
+                  <span class="text-right font-weight-bold border-left border-dark">{{calculateTotal(CallPurchaseOrderProcedureAsyncdata,'AMOUNT') | number : '1.2-2'}}</span>
+                </div> 
+              </ng-container>
+
+
+
+              <ng-container *ngSwitchCase="'SECTIONWISE_COLLECTIONS'">
+                <div class="app-det">
+                  <span class="font-weight-bold">SECTION NAME</span>
+                  <SPAn class="font-weight-bold text-right">AMOUNT</SPAn>
+                </div>
+                <div class="app-det" *ngFor="let items of CallCollectionSctProcedureAsyncdata;let i=index">        
+                  <SPAn>{{items.GP}}</SPAn>
+                  <span class="text-right">{{items.Total==null?'0.00':(items.Total | number: '1.2-2')}}</span>
+                  
+                </div>
+                <div class="app-det">
+                  <span class="font-weight-bold">TOTAL</span>
+                  <span class="text-right font-weight-bold">{{calculateTotal(CallCollectionSctProcedureAsyncdata,'Total') | number : '1.2-2'}}</span>
+                </div>
+                
+              </ng-container>
+
+
+
+              <ng-container *ngSwitchCase="'GROUPWISE_REVENUE'">
+                <div class="table-responsive" id="print">
+                  <table class="table-bordered table hover-table">
+                    <thead>
+                      <th>GROUP NAME</th>
+                      <th class="text-right">GROSS</th>
+                      <th class="text-right">DISCOUNT</th>
+                      <th class="text-right">NET AMOUNT</th>
+                    </thead>
+                    <tbody>
+                      <ng-container *ngFor="let item of DsProcGroupProcedureAsyncdata; let i = index">
+                        <tr >
+                          <td>{{item.ProcedureGroupName || ''}}</td>
+                          <td class="text-right">{{item.GrossAmount == null ? '0.00' : (item.GrossAmount| number: '1.2-2')}}</td>
+                          <td class="text-right">{{item.Discount == null ? '0.00' : (item.Discount| number: '1.2-2')}}</td>
+                          <td class="text-right">{{item.NetAmount == null ? '0.00' : (item.NetAmount| number: '1.2-2')}}</td>
+                        </tr>
+                      </ng-container>
+                    </tbody>
+                      <tr>
+                        <td class="font-weight-bold">GRAND TOTAL</td>
+                        <td class="text-right font-weight-bold">  {{calculateTotal(DsProcGroupProcedureAsyncdata,'GrossAmount' )| number: '1.2-2'}}</td>
+                        <td class="text-right font-weight-bold">{{calculateTotal(DsProcGroupProcedureAsyncdata,'Discount' )| number: '1.2-2'}}</td>
+                        <td class="text-right font-weight-bold">{{calculateTotal(DsProcGroupProcedureAsyncdata,'NetAmount' )| number: '1.2-2'}}</td>
+                      </tr>
+                  </table>
+                </div>
+              </ng-container>
+
+
+
+              <ng-container *ngSwitchCase="'DOCTOR_REFERENCES'">
+                <div class="table-responsive" id="print">
+                  <table class="table-bordered table hover-table">
+                    <thead>
+                      <th>NAME</th>
+                      <th class="text-right">GROSS</th>
+                      <th class="text-right">DISCOUNT</th>
+                      <th class="text-right">NET AMOUNT</th>
+                    </thead>
+                    <tbody>
+                      <ng-container *ngFor="let item of CallReferalReportProcedureAsyncdata; let i = index">
+                        <tr >
+                          <td>{{item.ReferredBy || ''}}</td>
+                          <td class="text-right">{{item.GrossAmount == null ? '0.00' : (item.GrossAmount| number: '1.2-2')}}</td>
+                          <td class="text-right">{{item.Discount == null ? '0.00' : (item.Discount| number: '1.2-2')}}</td>
+                          <td class="text-right">{{item.NetAmount == null ? '0.00' : (item.NetAmount| number: '1.2-2')}}</td>           
+                        </tr>
+                      </ng-container>
+                      <tr>
+                        <td class="font-weight-bold">GRAND TOTAL</td>
+                        <td class="text-right font-weight-bold">  {{calculateTotal(CallReferalReportProcedureAsyncdata,'GrossAmount' )| number: '1.2-2'}}</td>
+                        <td class="text-right font-weight-bold">{{calculateTotal(CallReferalReportProcedureAsyncdata,'Discount' )| number: '1.2-2'}}</td>
+                        <td class="text-right font-weight-bold">{{calculateTotal(CallReferalReportProcedureAsyncdata,'NetAmount' )| number: '1.2-2'}}</td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+                
+              </ng-container>
+
+
+
+
+              <ng-container *ngSwitchCase="'CATEGORYWISE_REVENUE'">
+                <div class="table-responsive" id="print">
+                  <table class="table-bordered table hover-table">
+                    <thead>
+                      <th>CATEGORY NAME</th>
+                      <th class="text-right">GROSS</th>
+                      <th class="text-right">DISCOUNT</th>
+                      <th class="text-right">NET AMOUNT</th>
+                    </thead>
+                    <tbody>
+                      <ng-container *ngFor="let item of DsProcCategoryProcedureAsyncDATA; let i = index">
+                        <tr >
+                          <td>{{item.PRCCAT_NAME || ''}}</td>
+                          <td class="text-right">{{item.GROSS == null ? '0.00' : (item.GROSS| number: '1.2-2')}}</td>
+                          <td class="text-right">{{item.DISCOUNT == null ? '0.00' : (item.DISCOUNT| number: '1.2-2')}}</td>
+                          <td class="text-right">{{item.NETAMOUNT == null ? '0.00' : (item.NETAMOUNT| number: '1.2-2')}}</td>             
+                        </tr>
+                      </ng-container>
+                      <tr>
+                        <td class="font-weight-bold">GRAND TOTAL</td>
+                        <td class="text-right font-weight-bold">  {{calculateTotal(DsProcCategoryProcedureAsyncDATA,'GROSS' )| number: '1.2-2'}}</td>
+                        <td class="text-right font-weight-bold">{{calculateTotal(DsProcCategoryProcedureAsyncDATA,'DISCOUNT' )| number: '1.2-2'}}</td>
+                        <td class="text-right font-weight-bold">{{calculateTotal(DsProcCategoryProcedureAsyncDATA,'NETAMOUNT' )| number: '1.2-2'}}</td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+              </ng-container>
+
+
+
+              <ng-container *ngSwitchCase="'PROCEDUREWISE_REVENUE'">
+                <div class="table-responsive" id="print">
+                  <table class="table-bordered table hover-table">
+                    <thead>
+                      <th>PROCEDURE NAME</th>
+                      <th class="text-center">COUNT</th>
+                      <th class="text-right">GROSS</th>
+                      <th class="text-right">DISCOUNT</th>
+                      <th class="text-right">NET AMOUNT</th>
+                    </thead>
+                    <tbody>
+                      <ng-container *ngFor="let item of DsProcedureProcedureAsyncDATA; let i = index">
+                        <tr >
+                          <td>{{item.PrcName || ''}}</td>
+                          <td class="text-center">{{item.ProcCount || '0'}}</td>
+                          <td class="text-right">{{item.Gross == null ? '0.00' : (item.Gross| number: '1.2-2')}}</td>
+                          <td class="text-right">{{item.Discount == null ? '0.00' : (item.Discount| number: '1.2-2')}}</td>
+                          <td class="text-right">{{item.NetAmount == null ? '0.00' : (item.NetAmount| number: '1.2-2')}}</td>
+             </tr>
+                      </ng-container>
+                      <tr>
+                        <td class="font-weight-bold">GRAND TOTAL</td>
+                        <td class=" text-center font-weight-bold">{{calculateTotal(DsProcedureProcedureAsyncDATA,'ProcCount' )}}</td>
+                        <td class="text-right font-weight-bold">{{calculateTotal(DsProcedureProcedureAsyncDATA,'Gross' )| number: '1.2-2'}}</td>
+                        <td class="text-right font-weight-bold">{{calculateTotal(DsProcedureProcedureAsyncDATA,'Discount' )| number: '1.2-2'}}</td>
+                        <td class="text-right font-weight-bold">{{calculateTotal(DsProcedureProcedureAsyncDATA,'NetAmount' )| number: '1.2-2'}}</td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+              </ng-container>
+
+
+              <ng-container *ngSwitchCase="'PURCHASE_DETAILS'">
+                <DIV class="app-det font-weight-bold">
+                  <SPAn >NAME</SPAn>
+                  <SPAn class="text-center">COUNT</SPAn>
+                  <SPan class="text-right border-dark border-left">AMOUNT</SPan>
+                </DIV>
+                <div class="app-det" *ngFor="let items of DsPurchaseProcedureAsyncdata;let i=index">
+                  <span>{{items.GP | uppercase}}</span>
+                  <span class="text-center">{{items.BILL_CNT==null?'':items.BILL_CNT}}</span>
+                  <span class="border-left border-dark text-right">{{items.AMOUNT==null?'0.00':(items.AMOUNT| number: '1.2-2')}}</span>
+                  
+                </div>
+                <div class="app-det">
+                  <span class="font-weight-bold">TOTAL</span>
+                  <span class="font-weight-bold text-center" >{{calculateTotal(DsPurchaseProcedureAsyncdata,'BILL_CNT')}}</span>
+                  <span class="text-right font-weight-bold border-left border-dark">{{calculateTotal(DsPurchaseProcedureAsyncdata,'AMOUNT') | number : '1.2-2'}}</span>
+                </div>
+              </ng-container>
+
+              <ng-container *ngSwitchCase="'COLLECTION'">
+                <div class="app-det font-weight-bold">
+                  <span >MODE</span>
+                  <span class="text-right">AMOUNT</span>
+                </div>
+                <div class="app-det">
+                  <span>CASH</span>
+                  <span class="text-right">{{CallCollectionProcedureAsyncdata[0].Cash | number: '1.2-2'}}</span>
+                </div>
+                <div class="app-det">
+                  <span>CREDIT</span>
+                  <span class="text-right">{{CallCollectionProcedureAsyncdata[0].Credit| number: '1.2-2'}}</span>
+                </div>
+                <div class="app-det">
+                  <span>CREDIT CARD</span>
+                  <span  class="text-right">{{CallCollectionProcedureAsyncdata[0].CreditCard| number: '1.2-2'}}</span>
+                </div>
+                <div class="app-det">
+                  <span>OT</span>
+                  <span class="text-right">{{CallCollectionProcedureAsyncdata[0].OT| number: '1.2-2'}}</span>
+                </div>
+                <div class="app-det">
+                  <span>INSURANCE</span>
+                  <span class="text-right">{{CallCollectionProcedureAsyncdata[0].Insurance| number: '1.2-2'}}</span>
+                </div>
+                <div class="app-det">
+                  <span>CHEQUE  </span>
+                  <span class="text-right">{{CallCollectionProcedureAsyncdata[0].Cheque| number: '1.2-2'}}</span>
+                </div>
+                <div class="app-det">
+                  <span>BWALLET</span>
+                  <span class="text-right">{{CallCollectionProcedureAsyncdata[0].BWallet| number: '1.2-2'}}</span>
+                </div>
+                <div class="app-det">
+                  <span class="font-weight-bold">TOTAL</span>
+                  <span class="text-right font-weight-bold">{{CallCollectionProcedureAsyncdata[0].Total| number: '1.2-2'}}</span>
+                </div>
+              </ng-container>
+    
+              <!-- Add more cases for other types as necessary -->
+    
+            </ng-container>
           </div>
         </div>
-  </div>
- </div>
-  
-
-
-   
+      </ng-container>
+    </div>
+    
 
  
-   
-
-   
-<!-- 1,7-->
- <div class="col-lg-4 my-1">
+    
  
-<div class="row">
-
-   <!-- 1 -->
-   <div class="col-lg-12 my-1" *ngIf="DsIpRevProcedureAsyncdata.length>0">
-    <div class="card app-cards">
-      <h5>IP Income</h5>
-      <div class="app-det" *ngFor="let items of DsIpRevProcedureAsyncdata;let i=index">
-        <span>{{items.GP}}</span>
-        <span class="text-right">{{items.AMOUNT==null?'0.00':(items.AMOUNT| number: '1.2-2')}}</span>
-      </div>
-      <div class="app-det">
-        <span class="font-weight-bold">Total</span>
-        <span class="text-right font-weight-bold">{{calculateTotal(DsIpRevProcedureAsyncdata,'AMOUNT') | number : '1.2-2'}}</span>
-      </div>
-    
-    </div>
-  </div>
-  
-
-    <!-- 7 -->
-
-    <div class="col-lg-12 my-1" *ngIf="CallCollectionSctProcedureAsyncdata.length>0">
-      <div class="card app-cards">
-        <h5>Section Wise Collection</h5>
-        <div class="app-det" *ngFor="let items of CallCollectionSctProcedureAsyncdata;let i=index">
-          <!-- <span>{{items.PRCCAT_ID}}</span> -->
-          <SPAn>{{items.GP}}</SPAn>
-          <!-- <span>{{items.BILL_CNT==null?'':items.BILL_CNT}}</span> -->
-          <span class="text-right">{{items.Total==null?'0.00':(items.Total | number: '1.2-2')}}</span>
-          
-        </div>
-        <div class="app-det">
-          <span class="font-weight-bold">Total</span>
-          <span class="text-right font-weight-bold">{{calculateTotal(CallCollectionSctProcedureAsyncdata,'Total') | number : '1.2-2'}}</span>
-        </div>
-      
-      </div>
-    </div>
-
-
-
-       
-      </div>
-    </div>
-
-       
-
-
-   
-
- 
-
-    
-
-     
-
-      <!-- {
-        "FreeNo": 58,
-        "RevisitNo": 108,
-        "NewNo": 1,
-        "PrcNo": 5,
-        "PayType": "Cash",
-        "Total": 172
-    } -->
-
-<!-- 14 -->
-
-<!-- <div class="col-lg-6" *ngIf="sp_ds_op_stsdata.length>0">
-  <div class="card app-cards">
-    <h5>Visit Statistics</h5>
-    <div class="app-det">
-      <span>New</span>
-      <span class="border-dark border-left">Free</span>
-      <span class="border-dark border-left">Revisit</span>      
-      <span class="border-dark border-left">Procedure</span>
-      <span class="border-dark border-left">PayType</span>      
-      <span class="border-dark border-left">Total</span>
-      
-    </div>
-    <div class="app-det" *ngFor="let items of sp_ds_op_stsdata;let i = index">
-      <span>{{items.NewNo}}</span>
-      <span class="border-dark border-left">{{items.FreeNo}}</span>
-      <span class="border-dark border-left">{{items.RevisitNo}}</span>      
-      <span class="border-dark border-left">{{items.PrcNo}}</span>
-      <span class="border-dark border-left">{{items.PayType}}</span>      
-      <span class="border-dark border-left">{{items.Total}}</span>
-
-    </div>
-    
-  </div>
-</div> -->
-
-<!-- <div class="col-lg-6" *ngIf="sp_ds_op_stsdata.length>0"> -->
-  <!-- <div class="app-cards">
-  <h5>Visit Statistics</h5>
-  <div class="table-responsive" id="print">
-    <table class="table-bordered table hover-table">
-      <thead >
-        <tr>
-            <th scope="col" >New</th> 
-            <th scope="col" >Free</th>                
-            <th scope="col">Revisit</th>              
-            <th scope="col">Procedure</th>              
-            <th scope="col">PayType</th>              
-            <th scope="col">Total</th>              
-     
-            
-        </tr>
-    </thead>
-    <tbody *ngIf="sp_ds_op_stsdata.length>0">
-        <tr *ngFor="let items of sp_ds_op_stsdata; let i = index">
-            <td>{{items.NewNo}}</td>
-            <td>{{items.FreeNo}}</td>
-           <td>{{items.RevisitNo}}</td>
-          <td>{{items.PrcNo}}
-            </td>
-            <td>{{items.PayType}}</td>
-            <td>{{items.Total}}</td>
-            
-        </tr>
-    </tbody>
-    </table>
-  </div>
-</div> -->
-
-
-<!-- </div> -->
-
-<!-- {
-  "GP": "REFUND",
-  "Cash": null,
-  "Credit": null,
-  "CreditCard": null,
-  "OT": null,
-  "Insurance": null,
-  "Cheque": null,
-  "BWallet": null,
-  "Total": null
-} -->
-
-
-<!-- <div class="col-lg-12" >
-  <div class="card app-cards">
-    <h5>Section Wise Collection</h5>
-    <div class="app-det">
-      <span>GP</span>
-      <span class="border-dark border-left">Cash</span>
-      <span class="border-dark border-left">Credit</span>      
-      <span class="border-dark border-left">CreditCard</span>
-      <span class="border-dark border-left">OT</span>     
-      <span class="border-dark border-left">Insurance</span>
-      <span class="border-dark border-left">Cheque</span>
-      <span class="border-dark border-left">BWallet</span> 
-      <span class="border-dark border-left">Total</span>
-  
-    </div>
-    <div class="app-det" >
-      
-      <span>{{items.GP}}</span>
-      <span class="border-dark border-left">{{items.Cash}}</span>      
-      <span class="border-dark border-left">{{items.Credit}}</span>
-      <span class="border-dark border-left">{{items.CreditCard}}</span>            
-      <span class="border-dark border-left">{{items.OT}}</span>
-      <span class="border-dark border-left">{{items.Insurance}}</span>        
-      <span class="border-dark border-left">{{items.Cheque}}</span>
-      <span class="border-dark border-left">{{items.BWallet}}</span>  
-      <span class="border-dark border-left">{{items.Total}}</span>
-
-    </div>
-    
-  </div>
-</div> -->
-
-
-
-
-
-
-<!-- <div class="col-lg-12 m-1" *ngIf="CallCollectionSctProcedureAsyncdata.length>0">
-  <div class="app-cards">  <h5>Section Wise Collection</h5>
-  <div class="table-responsive" id="print">
-    <table class="table-bordered table hover-table">
-      <thead>
-        <tr>
-            <th scope="col" >GP</th> 
-            <th scope="col" >Cash</th>                
-            <th scope="col">Credit</th>              
-            <th scope="col">CreditCard</th>              
-            <th scope="col">OT</th>              
-            <th scope="col">Insurance</th>                    
-            <th scope="col">Cheque</th>              
-            <th scope="col">BWallet</th>              
-            <th scope="col">Total</th>              
-         
-            
-        </tr>
-    </thead>
-    <tbody *ngIf="CallCollectionSctProcedureAsyncdata.length>0">
-        <tr *ngFor="let items of CallCollectionSctProcedureAsyncdata; let i = index">
-            <td>{{items.GP }}</td>
-            <td class="text-right">{{items.Cash| number: '1.2-2'}}</td>
-           <td class="text-right">{{items.Credit| number: '1.2-2'}}</td>
-            <td class="text-right">{{items.CreditCard| number: '1.2-2'}}
-            </td>
-            <td class="text-right">{{items.OT| number: '1.2-2'}}</td>
-            <td class="text-right">{{items.Insurance| number: '1.2-2'}}</td>
-            <td class="text-right">{{items.Cheque| number: '1.2-2'}}</td>
-            <td class="text-right">{{items.BWallet| number: '1.2-2'}}</td>
-            
-            <td class="text-right">{{items.Total| number: '1.2-2'}}</td>
-         
-            
-        </tr>
-    </tbody>
-    </table>
-  </div>
-</div>
-
-</div> -->
-
-<!-- 5, -->
- <div class="col-lg-6">
-  <div class="row">
-       <!-- 5 -->
-    <!-- {
-      "ProcedureGroupId": 0,
-      "ProcedureGroupName": "BIOCHEMISTRY",
-      "GrossAmount": 3730,
-      "Discount": 175,
-      "NetAmount": 3555
-  } -->
-
-  <div class="col-lg-12 my-1" *ngIf="DsProcGroupProcedureAsyncdata.length > 0">
-    <div class=" app-cards">
-      
-      <h5>Group Wise Revenue</h5>
-      <div class="table-responsive" id="print">
-        <table class="table-bordered table hover-table">
-          <thead>
-            <th>Name</th>
-            <th>Gross</th>
-            <th>Discount</th>
-            <th>Net Amount</th>
-          </thead>
-          <tbody>
-            <!-- ng-container to handle the *ngIf check -->
-            <ng-container *ngFor="let item of DsProcGroupProcedureAsyncdata; let i = index">
-              <tr >
-                <!-- First column -->
-                <td>{{item.ProcedureGroupName || ''}}</td>
-                <!-- <td>{{item.ProcedureCount || '0'}}</td> -->
-                <td class="text-right">{{item.GrossAmount == null ? '0.00' : (item.GrossAmount| number: '1.2-2')}}</td>
-                <td class="text-right">{{item.Discount == null ? '0.00' : (item.Discount| number: '1.2-2')}}</td>
-                <td class="text-right">{{item.NetAmount == null ? '0.00' : (item.NetAmount| number: '1.2-2')}}</td>
-  
-             
-              </tr>
-            </ng-container>
-          </tbody>
-          <!-- <tbody> -->
-            <tr>
-              <td class="font-weight-bold">Grand Total</td>
-              <td class="text-right font-weight-bold">  {{calculateTotal(DsProcGroupProcedureAsyncdata,'GrossAmount' )| number: '1.2-2'}}</td>
-              <td class="text-right font-weight-bold">{{calculateTotal(DsProcGroupProcedureAsyncdata,'Discount' )| number: '1.2-2'}}</td>
-              <td class="text-right font-weight-bold">{{calculateTotal(DsProcGroupProcedureAsyncdata,'NetAmount' )| number: '1.2-2'}}</td>
-            </tr>
-          <!-- </tbody> -->
-        </table>
-      </div>
-    </div>
-  </div>
-    <!-- 15 -->
-<!-- {
-  "ReferredBy": "DR A  NATHANIEL THOMAS",
-  "NetAmount": 1300,
-  "GrossAmount": 1300,
-  "Discount": 0
-} -->
-
-<div class="col-lg-12 my-1" *ngIf="CallReferalReportProcedureAsyncdata.length > 0">
-  <div class=" app-cards">
-    
-    <h5>Doctor References</h5>
-    <div class="table-responsive" id="print">
-      <table class="table-bordered table hover-table">
-        <thead>
-          <th>Name</th>
-          <th>Gross</th>
-          <th>Discount</th>
-          <th>Net Amount</th>
-        </thead>
-        <tbody>
-          <ng-container *ngFor="let item of CallReferalReportProcedureAsyncdata; let i = index">
-            <tr >
-              <td>{{item.ReferredBy || ''}}</td>
-              <td class="text-right">{{item.GrossAmount == null ? '0.00' : (item.GrossAmount| number: '1.2-2')}}</td>
-              <td class="text-right">{{item.Discount == null ? '0.00' : (item.Discount| number: '1.2-2')}}</td>
-              <td class="text-right">{{item.NetAmount == null ? '0.00' : (item.NetAmount| number: '1.2-2')}}</td>
-
-           
-            </tr>
-          </ng-container>
-          <tr>
-            <td class="font-weight-bold">Grand Total</td>
-            <td class="text-right font-weight-bold">  {{calculateTotal(CallReferalReportProcedureAsyncdata,'GrossAmount' )| number: '1.2-2'}}</td>
-            <td class="text-right font-weight-bold">{{calculateTotal(CallReferalReportProcedureAsyncdata,'Discount' )| number: '1.2-2'}}</td>
-            <td class="text-right font-weight-bold">{{calculateTotal(CallReferalReportProcedureAsyncdata,'NetAmount' )| number: '1.2-2'}}</td>
-          </tr>
-        </tbody>
-      </table>
-    </div>
-  </div>
-</div>
-  </div>
- </div>
-
-
-  <!-- <div class="col-lg-4 my-1" *ngIf="DsProcGroupProcedureAsyncdata.length>0">
-    <div class="card app-cards">
-      <h5>Group Wise Revenue</h5>
-      <div class="app-det" *ngFor="let items of DsProcGroupProcedureAsyncdata;let i=index">
-       
-        <SPAn>{{items.PRC_GRP_NAME}}</SPAn>
-        <span class="text-right">{{items.NETAMOUNT==null?'0.00':(items.NETAMOUNT | number: '1.2-2')}}</span>
-        
-      </div>
-    
-    </div>
-  </div> -->
-
-  <!-- 6,4 -->
-  <div class="col-lg-6">
-    <div class="row">
-         <!-- 4 -->
-     <!-- {
-      "PRCCAT_ID": "UCHM000103",
-      "PRCCAT_NAME": "LAB",
-      "GROSS": 1700,
-      "DISCOUNT": 0,
-      "NETAMOUNT": 1700
-  } -->
-
-  <div class="col-lg-12 my-1" *ngIf="DsProcCategoryProcedureAsyncDATA.length > 0">
-    <div class=" app-cards">
-      
-      <h5>Category Wise Revenue</h5>
-      <div class="table-responsive" id="print">
-        <table class="table-bordered table hover-table">
-          <thead>
-            <th>Name</th>
-            <th>Gross</th>
-            <th>Discount</th>
-            <th>Net Amount</th>
-          </thead>
-          <tbody>
-            <!-- ng-container to handle the *ngIf check -->
-            <ng-container *ngFor="let item of DsProcCategoryProcedureAsyncDATA; let i = index">
-              <tr >
-                <!-- First column -->
-                <td>{{item.PRCCAT_NAME || ''}}</td>
-                <!-- <td>{{item.ProcedureCount || '0'}}</td> -->
-                <td class="text-right">{{item.GROSS == null ? '0.00' : (item.GROSS| number: '1.2-2')}}</td>
-                <td class="text-right">{{item.DISCOUNT == null ? '0.00' : (item.DISCOUNT| number: '1.2-2')}}</td>
-                <td class="text-right">{{item.NETAMOUNT == null ? '0.00' : (item.NETAMOUNT| number: '1.2-2')}}</td>
-  
-             
-              </tr>
-            </ng-container>
-            <tr>
-              <td class="font-weight-bold">Grand Total</td>
-              <td class="text-right font-weight-bold">  {{calculateTotal(DsProcCategoryProcedureAsyncDATA,'GROSS' )| number: '1.2-2'}}</td>
-              <td class="text-right font-weight-bold">{{calculateTotal(DsProcCategoryProcedureAsyncDATA,'DISCOUNT' )| number: '1.2-2'}}</td>
-              <td class="text-right font-weight-bold">{{calculateTotal(DsProcCategoryProcedureAsyncDATA,'NETAMOUNT' )| number: '1.2-2'}}</td>
-            </tr>
-          </tbody>
-        </table>
-      </div>
-    </div>
-  </div>
-     <!-- <div class="col-lg-4 my-1" *ngIf="DsProcCategoryProcedureAsyncDATA.length > 0">
-      <div class="card app-cards">
-        <h5>Category wise Revenue</h5>
-        <div class="app-det" *ngFor="let items of DsProcCategoryProcedureAsyncDATA; let i = index">
-    
-          <span>{{items.PRCCAT_NAME}}</span>
-          <span class="text-right">{{items.NETAMOUNT == null ? '0.00' : (items.NETAMOUNT | number: '1.2-2')}}</span>
-        </div>
-      </div>
-    </div> -->
-
- 
-
-
- 
-<!-- 6 -->
-
-<!-- {
-  "PRC_ID": "PORT000045",
-  "PRC_NAME": "ALKALINE PHOSPHATE",
-  "NetAmount": 80,
-  "ProcedureCount": 1
-} -->
- <div class="col-lg-12 my-1" *ngIf="DsProcedureProcedureAsyncDATA.length > 0">
-  <div class=" app-cards">
-    
-    <h5>Procedure Wise Revenue</h5>
-    <div class="table-responsive" id="print">
-      <table class="table-bordered table hover-table">
-        <thead>
-          <th>Name</th>
-          <th>Count</th>
-          <th>Net Amount</th>
-        </thead>
-        <tbody>
-          <!-- ng-container to handle the *ngIf check -->
-          <ng-container *ngFor="let item of DsProcedureProcedureAsyncDATA; let i = index">
-            <tr >
-              <!-- First column -->
-              <td>{{item.PRC_NAME || ''}}</td>
-              <td>{{item.ProcedureCount || '0'}}</td>
-              <td class="text-right">{{item.NetAmount == null ? '0.00' : (item.NetAmount| number: '1.2-2')}}</td>
-
-              <!-- Second column -->
-              <!-- <td>{{DsProcedureProcedureAsyncDATA[i+1]?.PRC_NAME || ''}}</td>
-              <td class="text-right">{{DsProcedureProcedureAsyncDATA[i+1].PRC_NAME == ''?'':DsProcedureProcedureAsyncDATA[i+1]?.NETAMOUNT == null ? '0.00' : (DsProcedureProcedureAsyncDATA[i+1].NETAMOUNT | number: '1.2-2') }}</td> -->
-
-              <!-- Third column -->
-              <!-- <td>{{DsProcedureProcedureAsyncDATA[i+2]?.PRC_NAME || ''}}</td>
-              <td>{{DsProcedureProcedureAsyncDATA[i+2]?.NETAMOUNT == null ? 0 : DsProcedureProcedureAsyncDATA[i+2].NETAMOUNT}}</td> -->
-            </tr>
-          </ng-container>
-          <tr>
-            <td class="font-weight-bold">Grand Total</td>
-            <!-- <td class="text-right font-weight-bold">  {{calculateTotal(DsProcedureProcedureAsyncDATA,'GrossAmount' )| number: '1.2-2'}}</td> -->
-            <td class=" font-weight-bold">{{calculateTotal(DsProcedureProcedureAsyncDATA,'ProcedureCount' )}}</td>
-            <td class="text-right font-weight-bold">{{calculateTotal(DsProcedureProcedureAsyncDATA,'NetAmount' )| number: '1.2-2'}}</td>
-          </tr>
-        </tbody>
-      </table>
-    </div>
-  </div>
-</div>
-
-    </div>
-  </div>
-
-
-
-
-
-<!-- <div class="col-lg-4 my-1" *ngIf="CallReferalReportProcedureAsyncdata.length>0">
-  <div class="card app-cards">
-    <h5>Doctor References</h5>
-    <div class="app-det" *ngFor="let items of CallReferalReportProcedureAsyncdata;let i=index">
-      
-      <SPAn>{{items.ReferredBy}}</SPAn>
-      <span class="text-right">{{items.NetAmount==null?'0.00':(items.NetAmount | number: '1.2-2')}}</span>
-      
-    </div>
-  
-  </div>
-</div> -->
-
-
-
- 
- 
-
-  </div>
 </div>
 <!-- </div> -->
