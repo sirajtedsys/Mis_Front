@@ -1,0 +1,352 @@
+<!-- <div class="appointment-cards"> -->
+  <div class="profile-name patient-titile text-center">
+    <h2 class="text-center">Purchase Order Approval</h2>
+  </div>
+
+  <div class="button-group mt-4">
+    <div class="button-box" [class.active]="requestType === 'gs'" (click)="requestypeChange('gs')">
+      <span>General Store</span>
+    </div>
+    <div class="button-box" [class.active]="requestType === 'procedure'" (click)="requestypeChange('procedure')">
+      <span>Procedure Billing</span>
+    </div>
+  </div>
+
+  <!-- <button class="btn btn-outline-success " (click)="op"> Modal</button> -->
+
+  <form action="#">
+    <div class="leave-body">
+  
+      <div class="leave-date d-flex">
+        <div class="date-speration">
+          <span>From</span>
+  
+  
+          <input type="date" name="check-in" id="check-in" [max]="Today" [(ngModel)]="fromdate" placeholder="From">
+  
+  
+        </div>
+        <div class="date-speration">
+          <span>To</span>
+          <input type="date" name="check-in" id="check-out"[min]="fromdate" [max]="Today" [(ngModel)]="todate" placeholder="To">
+        </div>
+      </div>
+      <div class="row mt-2">
+        <div class="col-8">
+          <div class="form-group">
+            <select id="currency" class="form-select" >
+             <option  value="all">All</option>
+             <option value="">Pending</option>
+             <option value="A" >Approved</option>
+             <option value="R" >Rejected</option>
+              <!-- <option>USD</option> -->
+            </select>
+          </div>
+          
+        </div>
+        <div class="col-4">
+          
+      <button class="btn btn-outline-success active" (click)="getreport()">Submit</button>
+          <!-- <div class="leave-submt"> -->
+            <!-- <input class="w-25" type="submit" (click)="getreport()" value="Submit"> -->
+          <!-- </div> -->
+        </div>
+      </div>
+   
+      
+    </div>
+ 
+  </form>
+
+
+
+  <!-- <div class="card-body"> -->
+  
+  <!-- </div> -->
+
+  <!-- {
+  "RequestId": 5,
+  "PatientOpNo": "23-54",
+  "PatientName": "ATHIRA RAMESH ",
+  "ServiceName": "PROCEDURE BILL",
+  "BillDate": null,
+  "BillNo": "",
+  "RequestedFor": "DISCOUNT",
+  "LbmPlanSlNo": 0,
+  "Quantity": 1,
+  "ProcedureId": "PORT000571",
+  "DiscountPercentage": 0,
+  "Remarks": "testtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt",
+  "RequestedBy": "NETBIOS",
+  "RequestedOn": "2024-11-18T10:21:00",
+  "EmrDocId": "",
+  "TestName": "3D/4D SCAN - PELVIS",
+  "RequestStatus": "",
+  "Doctor": "",
+  "IdCardNo": "868020253239",
+  "ProcedureRate": 1500,
+  "ApprovalRemarks": "testtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt",
+  "DiscountAmount": 200
+} -->
+
+
+ <span *ngIf="procdatalist.length>0 && requestType=='procedure'">
+  <div class="row my-4 mx-1">
+    <div class="col-6">
+      <button (click)="AcceptAndRejectAllProc('A')" class="btn w-100 btn-outline-success ">Accept All</button>
+    </div>
+    <div class="col-6">
+      <button (click)="AcceptAndRejectAllProc('R')" class="btn w-100 btn-outline-danger ">Reject All</button>
+    </div>
+  </div>
+  
+  <span *ngFor="let item of procdatalist; let i = index">
+    <!-- Accordion for Discount Requests -->
+    <div class="accordion mt-2" [id]="'discountAccordion' + i">
+      <div class="accordion-item">
+        <h2 class="accordion-header" [id]="'heading' + i">
+          <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" [attr.data-bs-target]="'#collapse' + i" aria-expanded="false" [attr.aria-controls]="'collapse' + i">
+            Supplier: {{item.Supplier}} <br> Po Amt: {{item.TestName}}  | PO Date : {{item.DiscountPercentage}}  
+          </button>
+        </h2>
+        <div [id]="'collapse' + i" class="accordion-collapse collapse" [attr.aria-labelledby]="'heading' + i" [attr.data-bs-parent]="'#discountAccordion' + i">
+          <div class="accordion-body">
+            <p><strong>Sl. No.:</strong> {{i+1}}</p>
+            <p><strong>Supplier:</strong> {{item.Supplier}}</p>            
+            <p click="(item )"> <strong>PO#:</strong> {{item.TestName}}</p>
+            <p><strong>PO Date:</strong> {{item.RequestedFor}}</p>
+            <p><strong>Detaills:</strong> {{item.ProcedureRate}}</p>    
+            <p><strong>PO Amount:</strong> {{item.ProcedureRate}}</p>     
+            <p><strong>Advance:</strong> {{item.ProcedureRate}}</p> 
+            <p><strong>Remarks:</strong><textarea  [value]="item.ApprovalRemarks" (input)="AddApprovalRemarksLabReport($event,i)" class="form-control" placeholder="Approval Remarks"></textarea>         </p>
+            <p><strong>Status:</strong>
+              <!-- <div class="form-group"> -->
+                <select id="currency" class="form-select" >
+                 <option  value="">Select</option>
+                 <!-- <option value="">Pending</option> -->
+                 <option value="A" >Approve</option>
+                 <option value="R" >Reject</option>
+                  <!-- <option>USD</option> -->
+                </select>
+              <!-- </div> -->
+            </p>
+            <!-- <p><strong>PO Amount:</strong> {{ DoCalculation(item.ProcedureRate,item.DiscountAmount) }}</p>           
+            <p><strong>Discount Percentage:</strong> <input type="text" [value]="item.DiscountPercentage" (input)="AddDiscountPercentageLabreport($event,i,item.ProcedureRate)" class="form-control" placeholder="Discount Percentage"></p>
+            <p><strong>Discount Amount:</strong> <input type="text" [value]="item.DiscountAmount" (input)="AddDiscountAmountLabReport($event,i,item.ProcedureRate)" class="form-control" placeholder="Discount Amount"></p> -->
+            <!-- <p><strong>Remarks:</strong> {{item.Remarks}}</p> -->
+               
+            <!-- <p><strong>Remarks:</strong> {{formatText(item.Remarks)}}</p>   
+            <p><strong>Approval Remarks:</strong><textarea  [value]="item.ApprovalRemarks" (input)="AddApprovalRemarksLabReport($event,i)" class="form-control" placeholder="Approval Remarks"></textarea>         </p>
+            <p><strong>Requested By:</strong> <br> {{item.RequestedBy}}</p>
+            <p><strong>Requested On:</strong> <br> {{item.RequestedOn | date:'dd-MMM-yyyy'}}</p> -->
+            
+            <!-- <button (click)="BillProcDiscountAppAndRej(item,1)" class="btn w-100 btn-outline-success active">Accept</button>            
+            <button (click)="BillProcDiscountAppAndRej(item,2)" class="btn w-100 btn-outline-danger active">Reject</button> -->
+
+          </div>
+        </div>
+      </div>
+    </div>
+  </span>
+</span>
+
+<!-- <div class="container mt-3"> -->
+  <!-- Sticky Header -->
+  <!-- <div class="sticky-header">
+    <h6>PO#: CM/GS/PO/00001/10/23</h6>
+    <p class="mb-0 small-text">Supplier: NAVANI MEDITEX PVT.LTD</p>
+  </div> -->
+
+  <!-- PO Details Section -->
+  <!-- <div class="card mb-3">
+    <div class="card-header">Order Details</div>
+    <div class="card-body">
+      <p><strong>PO Date:</strong> 03/10/2023</p>
+      <p><strong>Details:</strong> Raised by ANITHA H</p>
+      <p><strong>Approved On:</strong> 05/10/2023</p>
+      <p><strong>Approved By:</strong> RAMACHANDRAN</p>
+    </div>
+  </div> -->
+
+  <!-- Product Details Accordion -->
+  <!-- <div class="accordion" id="productAccordion">
+    <div class="accordion-item">
+      <h2 class="accordion-header" id="productHeading">
+        <button
+          class="accordion-button"
+          type="button"
+          data-bs-toggle="collapse"
+          data-bs-target="#productCollapse"
+          aria-expanded="true"
+          aria-controls="productCollapse"
+        >
+          Product Details
+        </button>
+      </h2>
+      <div
+        id="productCollapse"
+        class="accordion-collapse collapse show"
+        aria-labelledby="productHeading"
+      >
+        <div class="accordion-body">
+          <p><strong>Product Name:</strong> X RAY GOWN GENERAL NA</p>
+          <p><strong>Manufacturer:</strong> GENERAL</p>
+          <p><strong>Dimension:</strong> NA</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="accordion-item">
+      <h2 class="accordion-header" id="orderHeading">
+        <button
+          class="accordion-button collapsed"
+          type="button"
+          data-bs-toggle="collapse"
+          data-bs-target="#orderCollapse"
+          aria-expanded="false"
+          aria-controls="orderCollapse"
+        >
+          Order Details
+        </button>
+      </h2>
+      <div
+        id="orderCollapse"
+        class="accordion-collapse collapse"
+        aria-labelledby="orderHeading"
+      >
+        <div class="accordion-body">
+          <p><strong>Quantity:</strong> 50</p>
+          <p><strong>Free Qty:</strong> 46</p>
+          <p><strong>Rate:</strong> 46</p>
+          <p><strong>Tax %:</strong> 05.00 PANB</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="accordion-item">
+      <h2 class="accordion-header" id="stockHeading">
+        <button
+          class="accordion-button collapsed"
+          type="button"
+          data-bs-toggle="collapse"
+          data-bs-target="#stockCollapse"
+          aria-expanded="false"
+          aria-controls="stockCollapse"
+        >
+          Stock Details
+        </button>
+      </h2>
+      <div
+        id="stockCollapse"
+        class="accordion-collapse collapse"
+        aria-labelledby="stockHeading"
+      >
+        <div class="accordion-body">
+          <p><strong>Section Stock:</strong> 0</p>
+          <p><strong>All Stock:</strong> 44</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="accordion-item">
+      <h2 class="accordion-header" id="pricingHeading">
+        <button
+          class="accordion-button collapsed"
+          type="button"
+          data-bs-toggle="collapse"
+          data-bs-target="#pricingCollapse"
+          aria-expanded="false"
+          aria-controls="pricingCollapse"
+        >
+          Pricing Details
+        </button>
+      </h2>
+      <div
+        id="pricingCollapse"
+        class="accordion-collapse collapse"
+        aria-labelledby="pricingHeading"
+      >
+        <div class="accordion-body">
+          <p><strong>Last Purchase Rate:</strong> 46.000</p>
+          <p><strong>Last Net Rate:</strong> 46.000</p>
+          <p><strong>Last MRP:</strong> 46.000</p>
+        </div>
+      </div>
+    </div>
+  </div> -->
+<!-- </div> -->
+
+
+
+
+  <!-- {
+    "RequestId": 1,
+    "OpVisitId": null,
+    "PatientId": "UCHM00000000203",
+    "DoctorId": "UCHM000019",
+    "CustomerId": null,
+    "CustomerName": null,
+    "DiscountPercentage": 5,
+    "DiscountAmount": 0,
+    "Remarks": "dfgdgdgdhdhhfhdfhdfhh",
+    "RequestedBy": "NETBIOS",
+    "RequestedOn": "2024-04-20T14:05:19",
+    "ApprovedBy": "UCHM000001",
+    "ApprovedOn": "2024-04-20T14:05:56",
+    "RequestStatus": "A",
+    "ApprovalRemarks": "ewreweet",
+    "Doctor": "ALVEENA PAUL",
+    "RequestedUser": "NETBIOS",
+    "ApprovedUser": "NETBIOS",
+    "Status": "Approved",
+    "PatientOpNo": "23-000000202",
+    "PatientName": "PRAKRITI KRISHNA M ",
+    "PatientGender": "Female",
+    "PatientMobile": "8301026173"
+} -->
+   
+<span *ngIf="opdatalist.length>0 && requestType=='op'">
+  <div class="row my-4 mx-1">
+    <div class="col-6">
+      <button (click)="OpDiscountApproveAll()" class="btn w-100 btn-outline-success ">Accept All</button>
+    </div>
+    <div class="col-6">
+      <button (click)="OpDiscountRejectAll()" class="btn w-100 btn-outline-danger ">Reject All</button>
+    </div>
+  </div>
+  <span *ngFor="let item of opdatalist; let i = index">
+    <!-- Accordion for Discount Requests -->
+    <div class="accordion mt-2" [id]="'discountAccordion' + i">
+      <div class="accordion-item">
+        <h2 class="accordion-header" [id]="'heading' + i">
+          <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" [attr.data-bs-target]="'#collapse' + i" aria-expanded="false" [attr.aria-controls]="'collapse' + i">
+            Patient Name: {{item.PatientName}} <br> OP# : {{item.PatientOpNo}} | Disc% : {{item.DiscountPercentage}}% | Disc.Amt : {{item.DiscountAmount}}
+          </button>
+        </h2>
+        <div [id]="'collapse' + i" class="accordion-collapse collapse" [attr.aria-labelledby]="'heading' + i" [attr.data-bs-parent]="'#discountAccordion' + i">
+          <div class="accordion-body">
+            <p><strong>Sl. No.:</strong> {{i+1}}</p>               
+            <p><strong>Status:</strong> <span [ngClass]="item.Status == 'Approved' ? 'text-success' : item.Status == 'Rejected' ? 'text-danger' : ''"> {{item.Status}} </span></p>  
+            <p><strong>Doctor:</strong> {{item.Doctor}}</p>
+            <p><strong>Patient:</strong> {{item.PatientName}}</p>
+            <p><strong>Disc(%):</strong> <input type="text" class="form-control" (input)="AddDiscountPerOP($event,i)" [value]="item.DiscountPercentage" placeholder="Discount Percentage"> </p>
+            <p><strong>Disc Amt:</strong> <input type="text" [value]="item.DiscountAmount" (input)="AddDiscountAmoutOP($event,i)" class="form-control" placeholder="Discount Amount"></p>
+            <p><strong>Remarks:</strong> {{formatText(item.Remarks)}} </p>
+            <p><strong>Approval Remarks:</strong><textarea  [value]="item.ApprovalRemarks" (input)="AddAppRemarkOP($event,i)" class="form-control" placeholder="Approval Remarks"></textarea> </p>
+            <p><strong>Requested By / On:</strong> <br> {{item.RequestedBy}} <br> {{item.RequestedOn | date:'dd-MMM-yyyy hh:mm:ss a'}} </p>
+            <p><strong>Approved By / On:</strong> <br> {{item.ApprovedUser}} <br> {{item.ApprovedOn | date:'dd-MMM-yyyy hh:mm:ss'}}</p>
+            
+            <button (click)="OpDiscountApp(item)" class="btn w-100 btn-outline-success active">Accept</button>            
+            <button (click)="OpDiscountRej(item)" class="btn w-100 btn-outline-danger active">Reject</button>
+
+          </div>
+        </div>
+      </div>
+    </div>
+  </span>
+</span>
+  
+
+ 
+
+  <!-- </div> -->

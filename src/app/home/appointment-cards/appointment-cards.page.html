@@ -30,11 +30,13 @@
 
     <div class="row mt-2" *ngIf="PriorityData.length > 0">
       <ng-container *ngFor="let item of PriorityData">
-        <div     [ngClass]="{
-          'col-lg-6': item.Link === 'CATEGORYWISE_REVENUE' || item.Link === 'PROCEDUREWISE_REVENUE'|| item.Link === 'DOCTOR_REFERENCES'|| item.Link === 'GROUPWISE_REVENUE',
-          'col-lg-4': item.Link !== 'CATEGORYWISE_REVENUE' || item.Link !== 'PROCEDUREWISE_REVENUE'|| item.Link !== 'DOCTOR_REFERENCES'|| item.Link !== 'GROUPWISE_REVENUE'
-        }"
+        <div   class="col-lg-12"  
+   
       >
+           <!-- [ngClass]="{
+          'col-lg-12': item.Link === 'CATEGORYWISE_REVENUE' || item.Link === 'PROCEDUREWISE_REVENUE'|| item.Link === 'DOCTOR_REFERENCES'|| item.Link === 'GROUPWISE_REVENUE',
+          'col-lg-12': item.Link !== 'CATEGORYWISE_REVENUE' || item.Link !== 'PROCEDUREWISE_REVENUE'|| item.Link !== 'DOCTOR_REFERENCES'|| item.Link !== 'GROUPWISE_REVENUE'
+        }" -->
           <div class="card app-cards">
             <h5>{{ item.TabName }}</h5>
             

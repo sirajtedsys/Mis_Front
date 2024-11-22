@@ -1,0 +1,216 @@
+<!-- <div class="appointment-cards"> -->
+  <div class="profile-name patient-titile text-center">
+    <h2 class="text-center">Discount Requests</h2>
+  </div>
+
+  <div class="button-group mt-4">
+    <div class="button-box" [class.active]="requestType === 'op'" (click)="requestypeChange('op')">
+      <span>OP</span>
+    </div>
+    <div class="button-box" [class.active]="requestType === 'procedure'" (click)="requestypeChange('procedure')">
+      <span>Procedure Billing</span>
+    </div>
+  </div>
+
+  <form action="#">
+    <div class="leave-body">
+  
+      <div class="leave-date d-flex">
+        <div class="date-speration">
+          <span>From</span>
+  
+  
+          <input type="date" name="check-in" id="check-in" [max]="Today" [(ngModel)]="fromdate" placeholder="From">
+  
+  
+        </div>
+        <div class="date-speration">
+          <span>To</span>
+          <input type="date" name="check-in" id="check-out"[min]="fromdate" [max]="Today" [(ngModel)]="todate" placeholder="To">
+        </div>
+      </div>
+      <div class="leave-submt">
+        <input type="submit" (click)="getreport()" value="Submit">
+      </div>
+      
+    </div>
+ 
+  </form>
+
+
+
+  <!-- <div class="card-body"> -->
+  
+  <!-- </div> -->
+
+  <!-- {
+  "RequestId": 5,
+  "PatientOpNo": "23-54",
+  "PatientName": "ATHIRA RAMESH ",
+  "ServiceName": "PROCEDURE BILL",
+  "BillDate": null,
+  "BillNo": "",
+  "RequestedFor": "DISCOUNT",
+  "LbmPlanSlNo": 0,
+  "Quantity": 1,
+  "ProcedureId": "PORT000571",
+  "DiscountPercentage": 0,
+  "Remarks": "testtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt",
+  "RequestedBy": "NETBIOS",
+  "RequestedOn": "2024-11-18T10:21:00",
+  "EmrDocId": "",
+  "TestName": "3D/4D SCAN - PELVIS",
+  "RequestStatus": "",
+  "Doctor": "",
+  "IdCardNo": "868020253239",
+  "ProcedureRate": 1500,
+  "ApprovalRemarks": "testtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt",
+  "DiscountAmount": 200
+} -->
+
+
+<div class="row mt-2">
+  <div class="col-md-12">
+    <div class="form-group">
+    <select id="currency" class="form-select" (change)="StatusCahnge($event)" [(ngModel)]="RStatusPROC">
+     <option  value="all">All</option>
+     <option value="">Pending</option>
+     <option value="A" >Approved</option>
+     <option value="R" >Rejected</option>
+      <!-- <option>USD</option> -->
+    </select>
+  </div>
+  </div>
+</div>
+
+<!-- *ngIf="procdatalist.length==0 || opdatalist.length==0" -->
+<div class="row my-2 mx-3 " *ngIf="TableNullCheck()">
+  <div class="col-md-12 text-center mx-3">
+    <p>No record found</p>
+  </div>  
+</div>
+ <span *ngIf="procdatalist.length>0 && requestType=='procedure'">
+ 
+  <div class="row my-1 mx-1">
+    <div class="col-6">
+      <button (click)="AcceptAndRejectAllProc('A')" class="btn w-100 btn-outline-success ">Accept All</button>
+    </div>
+    <div class="col-6">
+      <button (click)="AcceptAndRejectAllProc('R')" class="btn w-100 btn-outline-danger ">Reject All</button>
+    </div>
+  </div>
+
+  
+  
+  <span *ngFor="let item of procdatalist; let i = index">
+    <!-- Accordion for Discount Requests -->
+    <div class="accordion mt-2" [id]="'discountAccordion' + i">
+      <div class="accordion-item">
+        <h2 class="accordion-header" [id]="'heading' + i">
+          <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" [attr.data-bs-target]="'#collapse' + i" aria-expanded="false" [attr.aria-controls]="'collapse' + i">
+            Patient Name: {{item.PatientName}} <br> Test Name: {{item.TestName}}  | Disc % : {{item.DiscountPercentage}}% | Disc Amt : {{item.DiscountAmount}}  
+          </button>
+        </h2>
+        <div [id]="'collapse' + i" class="accordion-collapse collapse" [attr.aria-labelledby]="'heading' + i" [attr.data-bs-parent]="'#discountAccordion' + i">
+          <div class="accordion-body">
+            <p><strong>Sl. No.:</strong> {{i+1}}</p>
+            <p><strong>Quantity:</strong> {{item.Quantity}}</p>            
+            <p><strong>Test Name:</strong> {{item.TestName}}</p>
+            <p><strong>Requested For:</strong> {{item.RequestedFor}}</p>
+            <p><strong>Rate:</strong> {{item.ProcedureRate}}</p>     
+            <p><strong>Amount:</strong> {{ DoCalculation(item.ProcedureRate,item.DiscountAmount) }}</p>           
+            <p><strong>Discount Percentage:</strong> <input type="text" [value]="item.DiscountPercentage" (input)="AddDiscountPercentageLabreport($event,i,item.ProcedureRate)" class="form-control" placeholder="Discount Percentage"></p>
+            <p><strong>Discount Amount:</strong> <input type="text" [value]="item.DiscountAmount" (input)="AddDiscountAmountLabReport($event,i,item.ProcedureRate)" class="form-control" placeholder="Discount Amount"></p>
+            <!-- <p><strong>Remarks:</strong> {{item.Remarks}}</p> -->
+               
+            <p><strong>Remarks:</strong> {{formatText(item.Remarks)}}</p>   
+            <p><strong>Approval Remarks:</strong><textarea  [value]="item.ApprovalRemarks" (input)="AddApprovalRemarksLabReport($event,i)" class="form-control" placeholder="Approval Remarks"></textarea>         </p>
+            <p><strong>Requested By:</strong> <br> {{item.RequestedBy}}</p>
+            <p><strong>Requested On:</strong> <br> {{item.RequestedOn | date:'dd-MMM-yyyy'}}</p>
+            
+            <button (click)="BillProcDiscountAppAndRej(item,1)" class="btn w-100 btn-outline-success active">Accept</button>            
+            <button (click)="BillProcDiscountAppAndRej(item,2)" class="btn w-100 btn-outline-danger active">Reject</button>
+
+          </div>
+        </div>
+      </div>
+    </div>
+  </span>
+</span>
+
+
+
+
+  <!-- {
+    "RequestId": 1,
+    "OpVisitId": null,
+    "PatientId": "UCHM00000000203",
+    "DoctorId": "UCHM000019",
+    "CustomerId": null,
+    "CustomerName": null,
+    "DiscountPercentage": 5,
+    "DiscountAmount": 0,
+    "Remarks": "dfgdgdgdhdhhfhdfhdfhh",
+    "RequestedBy": "NETBIOS",
+    "RequestedOn": "2024-04-20T14:05:19",
+    "ApprovedBy": "UCHM000001",
+    "ApprovedOn": "2024-04-20T14:05:56",
+    "RequestStatus": "A",
+    "ApprovalRemarks": "ewreweet",
+    "Doctor": "ALVEENA PAUL",
+    "RequestedUser": "NETBIOS",
+    "ApprovedUser": "NETBIOS",
+    "Status": "Approved",
+    "PatientOpNo": "23-000000202",
+    "PatientName": "PRAKRITI KRISHNA M ",
+    "PatientGender": "Female",
+    "PatientMobile": "8301026173"
+} -->
+   
+<span *ngIf="opdatalist.length>0 && requestType=='op'">
+ 
+  <div class="row my-1 mx-1">
+    <div class="col-6">
+      <button (click)="OpDiscountApproveAll()" class="btn w-100 btn-outline-success ">Accept All</button>
+    </div>
+    <div class="col-6">
+      <button (click)="OpDiscountRejectAll()" class="btn w-100 btn-outline-danger ">Reject All</button>
+    </div>
+  </div>
+
+  <span *ngFor="let item of opdatalist; let i = index">
+    <!-- Accordion for Discount Requests -->
+    <div class="accordion mt-2" [id]="'discountAccordion' + i">
+      <div class="accordion-item">
+        <h2 class="accordion-header" [id]="'heading' + i">
+          <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" [attr.data-bs-target]="'#collapse' + i" aria-expanded="false" [attr.aria-controls]="'collapse' + i">
+            Patient Name: {{item.PatientName}} <br> OP# : {{item.PatientOpNo}} | Disc% : {{item.DiscountPercentage}}% | Disc.Amt : {{item.DiscountAmount}}
+          </button>
+        </h2>
+        <div [id]="'collapse' + i" class="accordion-collapse collapse" [attr.aria-labelledby]="'heading' + i" [attr.data-bs-parent]="'#discountAccordion' + i">
+          <div class="accordion-body">
+            <p><strong>Sl. No.:</strong> {{i+1}}</p>               
+            <p><strong>Status:</strong> <span [ngClass]="item.Status == 'Approved' ? 'text-success' : item.Status == 'Rejected' ? 'text-danger' : ''"> {{item.Status}} </span></p>  
+            <p><strong>Doctor:</strong> {{item.Doctor}}</p>
+            <p><strong>Patient:</strong> {{item.PatientName}}</p>
+            <p><strong>Disc(%):</strong> <input type="text" class="form-control" (input)="AddDiscountPerOP($event,i)" [value]="item.DiscountPercentage" placeholder="Discount Percentage"> </p>
+            <p><strong>Disc Amt:</strong> <input type="text" [value]="item.DiscountAmount" (input)="AddDiscountAmoutOP($event,i)" class="form-control" placeholder="Discount Amount"></p>
+            <p><strong>Remarks:</strong> {{formatText(item.Remarks)}} </p>
+            <p><strong>Approval Remarks:</strong><textarea  [value]="item.ApprovalRemarks" (input)="AddAppRemarkOP($event,i)" class="form-control" placeholder="Approval Remarks"></textarea> </p>
+            <p><strong>Requested By / On:</strong> <br> {{item.RequestedBy}} <br> {{item.RequestedOn | date:'dd-MMM-yyyy hh:mm:ss a'}} </p>
+            <p><strong>Approved By / On:</strong> <br> {{item.ApprovedUser}} <br> {{item.ApprovedOn | date:'dd-MMM-yyyy hh:mm:ss'}}</p>
+            
+            <button (click)="OpDiscountApp(item)" class="btn w-100 btn-outline-success active">Accept</button>            
+            <button (click)="OpDiscountRej(item)" class="btn w-100 btn-outline-danger active">Reject</button>
+
+          </div>
+        </div>
+      </div>
+    </div>
+  </span>
+</span>
+  
+
+ 
+
+  <!-- </div> -->

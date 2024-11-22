@@ -1,4 +1,6 @@
 <!-- <div class="over-flow-h"> -->
+ <body>
+  
   <div class="main-container">
     <div class="logo" >
       <img style="height: 80px;" src="assets/images/logo.jpg">
@@ -17,7 +19,8 @@
           </div>
           <div class="border-seperation"></div>
           <li (click)="NavigateTo('home/appointment-cards')"><i class="fa-regular fa-calendar-check" ></i><a >Reports</a></li>
-          <!-- <li (click)="NavigateTo('home/leave-request-form')"><i class="fa-regular fa-calendar" ></i><a >Leave Request</a></li> -->
+          <li (click)="NavigateTo('home/discount-requests')"><i class="fa fa-tag" ></i><a >Discount Request</a></li>
+          <li (click)="NavigateTo('home/purchase-order-approval')"><i class="fa fa-tag" ></i><a >Purchase Order Approval</a></li>
           <li  (click)="LogOut()"><i class="fa-solid fa-right-from-bracket"></i><a >Logout</a></li>
         </ul>
       </div>
@@ -30,7 +33,7 @@
   </div>
 
   </div>
-  <footer>
+  <footer >
     <div class="f-left">
       <h6>&#169; 2023 <a href="https://www.remedihms.com/" target="_blank">REMEDIHMS.com</a></h6>
 
@@ -39,4 +42,5 @@
       <h6>Powered by<a href="https://tedsystech.com/" target="_blank">Tedsys Technologies</a></h6>
     </div>
   </footer>
+</body>
 <!-- </div> -->

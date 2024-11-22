@@ -1,0 +1,128 @@
+
+body {
+    padding: 20px;
+    background-color: #f8f9fa;
+  }
+
+  /* Card Styling */
+  .card {
+    border: none;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    margin-bottom: 20px;
+    border-radius: 8px;
+  }
+  .card-header {
+    background-color: #007bff;
+    color: white;
+    text-align: center;
+    padding: 12px;
+    font-weight: bold;
+  }
+
+  /* Accordion Styling */
+  .accordion-button {
+    background: linear-gradient(135deg, #4e73df, #224abe);
+    color: white;
+    border: none;
+    border-radius: 8px;
+    padding: 15px;
+    font-weight: bold;
+    font-size: 1rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    transition: background 0.3s;
+  }
+  .accordion-button:hover {
+    background: linear-gradient(135deg, #224abe, #1d2671);
+  }
+  .accordion-button:not(.collapsed) {
+    color:white;
+    background-color: #e2e6ea;
+  }
+  
+  /* Arrow Icon Styling with Transition */
+  .accordion-button:after {
+    font-family: "FontAwesome";
+    content: "\f078"; /* Down arrow */
+    color: white;
+    font-weight: bold;
+    transition: transform 0.3s ease; /* Smooth transition for the rotation */
+  }
+  .accordion-button.collapsed:after {
+    transform: rotate(-90deg); /* Rotates to the right when collapsed */
+  }
+
+  /* Accordion Content Styling */
+  .accordion-body {
+    background-color: #ffffff;
+    padding: 15px;
+    border-radius: 0 0 8px 8px;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+  }
+  .accordion-body p, .accordion-body .form-control {
+    margin: 0;
+    font-size: 0.9rem;
+  }
+
+  /* Button Styling */
+  .btn-approve, .btn-reject {
+    font-size: 0.9rem;
+    width: 100%;
+  }
+  .btn-approve {
+    background-color: #28a745;
+    color: white;
+    border: none;
+    transition: background 0.2s;
+  }
+  .btn-reject {
+    background-color: #dc3545;
+    color: white;
+    border: none;
+    transition: background 0.2s;
+  }
+  .btn-approve:hover {
+    background-color: #218838;
+  }
+  .btn-reject:hover {
+    background-color: #c82333;
+  }
+
+/* Styling for Custom Button Group */
+.button-group {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 20px;
+  }
+  
+  .button-box {
+    flex: 1;  /* Makes the buttons fill the available space equally */
+    padding: 12px 0;
+    background-color: #e2e6ea;
+    color: #495057;
+    border-radius: 8px;
+    text-align: center;
+    font-size: 1.1rem;
+    cursor: pointer;
+    transition: background-color 0.3s, transform 0.2s ease;
+    font-weight: bold;
+  }
+  
+  .button-box:hover {
+    background-color: #007bff;
+    color: white;
+    transform: translateY(-2px);
+  }
+  
+  .button-box.active {
+    background-color: #28a745;
+    color: white;
+  }
+  
+  .button-box.active:hover {
+    background-color: #218838;
+  }
+  

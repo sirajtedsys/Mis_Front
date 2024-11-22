@@ -23,9 +23,24 @@ const routes: Routes = [
         path: 'profile',
         loadChildren: () => import('./profile/profile.module').then( m => m.ProfilePageModule)
       },
+      {
+        path: 'discount-requests',
+        loadChildren: () => import('./discount-requests/discount-requests.module').then( m => m.DiscountRequestsPageModule)
+      },
+      {
+        path: 'purchase-order-approval',
+        loadChildren: () => import('./purchase-order-approval/purchase-order-approval.module').then( m => m.PurchaseOrderApprovalPageModule)
+      },
+      {
+        path: 'p-o-a-details',
+        loadChildren: () => import('./p-o-a-details/p-o-a-details.module').then( m => m.POADetailsPageModule)
+      },
 
     ]
   },
+ 
+
+
  
 
 ];

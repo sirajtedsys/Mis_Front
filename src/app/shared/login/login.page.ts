@@ -25,123 +25,104 @@ export class LoginPage implements OnInit {
     private router:Router
   ) {
     this.AutoLogin()
+
+    // alert("welocmm")
    }
 
   ngOnInit() {
 
   }
 
-  async GetAllUserBranches(menugpid: any) {  
-    const loading = await this.loader.create({
-      cssClass: 'custom-loading', // Optional: Apply custom CSS class for styling
-      message: 'Loading...', // Optional: Custom message
-      spinner: 'dots', // Optional: Choose a spinner
-      // duration: 2000 // Optional: Set a duration after which the loader will automatically dismiss
-    });
-    await loading.present();
+  // async GetAllUserBranches(menugpid: any) {  
+  //   const loading = await this.loader.create({
+  //     cssClass: 'custom-loading', // Optional: Apply custom CSS class for styling
+  //     message: 'Loading...', // Optional: Custom message
+  //     spinner: 'dots', // Optional: Choose a spinner
+  //     // duration: 2000 // Optional: Set a duration after which the loader will automatically dismiss
+  //   });
+  //   await loading.present();
   
-    // this.comser.GetAllTRabsByMEnuygroupid(menugpid).subscribe(
-    //   (data: any) => {
-    //     console.log(data);
-    //     loading.dismiss();
+  //   // this.comser.GetAllTRabsByMEnuygroupid(menugpid).subscribe(
+  //   //   (data: any) => {
+  //   //     console.log(data);
+  //   //     loading.dismiss();
   
     
-    //   },
-    //   (error: any) => {
-    //     console.error('Error fetching user rights:', error);
-    //     loading.dismiss();
-    //     Swal.fire('Error fetching user rights', '', 'error');
-    //   }
-    // );
-  }
- async Submit(){
+  //   //   },
+  //   //   (error: any) => {
+  //   //     console.error('Error fetching user rights:', error);
+  //   //     loading.dismiss();
+  //   //     Swal.fire('Error fetching user rights', '', 'error');
+  //   //   }
+  //   // );
+  // }
 
+  handleSingleBranch() {
+    const encryptcode = this.authser.Encrypt(this.BranchList[0]);
+    localStorage.setItem('Branch', JSON.stringify(encryptcode));
+    const Toast = Swal.mixin({
+      toast: true,
+      position: 'top-end',
+      showConfirmButton: false,
+      timer: 3000,
+      timerProgressBar: true,
+      didOpen: (toast) => {
+        toast.onmouseenter = Swal.stopTimer;
+        toast.onmouseleave = Swal.resumeTimer;
+      },
+    });
+    Toast.fire({
+      icon: 'success',
+      title: 'Signed in successfully',
+    });
+    this.router.navigate(['home/appointment-cards']);
+  }
+  
+  async Submit() {
     const loading = await this.loader.create({
       cssClass: 'custom-loading',
-      message: 'Loading...', 
-      spinner: 'dots', 
-      
+      message: 'Loading...',
+      spinner: 'dots',
     });
     await loading.present();
-    this.comser.LoginCheck(this.Username,this.Password).subscribe(async (data:any)=>{
-      loading.dismiss()
-      if(data)
-      {
-        //if username and password is correct then it will return 200 as status and token as Message
-        if(data.Status==200 && data.Message!=null)
-        {
-          //lets give teh token for encryption and save on localstorage
-          this.authser.EncryptToken(data.Message)
-
-          await loading.present()
-
-          this.comser.GetAllBranches().subscribe((data1:any)=>{
-            
-           loading.dismiss()
-            if(data1 && data1!=null)
-            {
-              this.BranchList=data1
-              console.log(this.BranchList,'branchlist');
-              
-              if(this.BranchList.length==1 )
-              {
-                
-                let encryptcode =  this.authser.Encrypt(this.BranchList[0])
-                localStorage.setItem('Branch',JSON.stringify(encryptcode))
-                const Toast = Swal.mixin({
-                  toast: true,
-                  position: "top-end",
-                  showConfirmButton: false,
-                  timer: 3000,
-                  timerProgressBar: true,
-                  didOpen: (toast) => {
-                    toast.onmouseenter = Swal.stopTimer;
-                    toast.onmouseleave = Swal.resumeTimer;
-                  }
-                });
-                Toast.fire({
-                  icon: "success",
-                  title: "Signed in successfully"
-                });
-                this.router.navigate(['home/appointment-cards'])
+  
+    this.comser.LoginCheck(this.Username, this.Password).subscribe({
+      next: async (data: any) => {
+        loading.dismiss();
+        if (data?.Status === 200 && data?.Message) {
+          this.authser.EncryptToken(data.Message);
+          await loading.present();
+  
+          this.comser.GetAllBranches().subscribe({
+            next: (data1: any) => {
+              loading.dismiss();
+              if (data1 && data1.length) {
+                this.BranchList = data1;
+                if (this.BranchList.length === 1) {
+                  this.handleSingleBranch();
+                } else {
+                  Swal.fire('Select a Branch to continue', '', 'info');
+                }
+              } else {
+                Swal.fire('No branches found', 'Contact Administrator', 'error');
               }
-              else if(this.BranchList.length>1)
-              {
-                Swal.fire('Select a Branch to continue','','info')
-              }
-              else if(this.BranchList.length==0 || this.BranchList == null)
-              {
-                Swal.fire('No branches found','Contact Administrator','error')
-              }
-              else
-              {
-                Swal.fire(data.Message,'','warning')
-              }
-
-              
-            }
-            else
-            {
-              this.BranchList=[]
-            }
-          })
-          // this.comser.
-          
-
-
+            },
+            error: () => {
+              loading.dismiss();
+              Swal.fire('Error fetching branches', '', 'error');
+            },
+          });
+        } else {
+          Swal.fire(data.Message || 'Invalid login', '', 'warning');
         }
-        else
-        {
-          Swal.fire(data.message,'','warning')
-        }
-        console.log(data);
-        
-      }
-    },(error:any)=>{
-      loading.dismiss()
-    })
-    
+      },
+      error: (error: any) => {
+        loading.dismiss();
+        Swal.fire('Login failed', 'Please check your credentials', 'error');
+      },
+    });
   }
+  
 
   continue()
   {
@@ -185,6 +166,8 @@ export class LoginPage implements OnInit {
  });
  await loading.present();
    this.comser.GetAllBranches().subscribe((data:any)=>{
+    console.log(data);
+    
      // this.comser.dismissLoading()
      loading.dismiss()
      if(data && data!=null)

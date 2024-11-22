@@ -1,5 +1,5 @@
 {
-  "name": "MIS",
+  "name": "MISv3App",
   "version": "0.0.1",
   "author": "Ionic Framework",
   "homepage": "https://ionicframework.com/",
@@ -25,6 +25,7 @@
     "@ionic/cordova-builders": "^11.0.0",
     "cordova-android": "13.0.0",
     "cordova-browser": "7.0.0",
+    "cordova-res": "^0.15.4",
     "crypto-js": "^4.2.0",
     "ionicons": "^7.0.0",
     "rxjs": "~7.8.0",
@@ -73,7 +74,6 @@
       "cordova-plugin-ionic-keyboard": {}
     },
     "platforms": [
-      "android",
       "browser"
     ]
   }

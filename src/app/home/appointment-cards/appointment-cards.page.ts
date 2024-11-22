@@ -195,15 +195,15 @@ ReportVisited: number=0;//9
   
         if (data && Array.isArray(data)) {
           // Assign priorities
-          if (data.length > 9 && data[9]) {
-            data[9].Priority = 1;
-          }
-          if (data.length > 14 && data[14]) {
-            data[14].Priority = 2;
-          }
-          if (data.length > 10 && data[10]) {
-            data[10].Priority = 3;
-          }
+          // if (data.length > 9 && data[9]) {
+          //   data[9].Priority = 1;
+          // }
+          // if (data.length > 14 && data[14]) {
+          //   data[14].Priority = 2;
+          // }
+          // if (data.length > 10 && data[10]) {
+          //   data[10].Priority = 3;
+          // }
   
           // Filter and sort data
           let data1 = data.filter((item: any) => item && typeof item.Priority == 'undefined' || item.Priority == null);
@@ -216,6 +216,10 @@ ReportVisited: number=0;//9
           this.PriorityData = data;
           console.log(this.PriorityData,"priority data");
           
+        }
+        else
+        {
+          Swal.fire("Zero reports Assigned,Contact Administrator",'','warning')
         }
       },
       (error: any) => {

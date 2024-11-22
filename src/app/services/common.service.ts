@@ -122,8 +122,9 @@ export class CommonService {
     let options ={ headers: headers };
     return this.http.post(this.appconfig.url + '/Common/CheckLogin',cred, options)
     .pipe(
-      
+        
       catchError((error: any) => {
+        // alert(error)
         // Handle the error here or rethrow it as needed
         console.error('Error in LoginCheck:', error);
         return throwError(error); // Rethrow the error
@@ -483,5 +484,110 @@ CallReferalReportProcedureAsync(fromd:string,tod:string)
 }
 
 
+GetBillDiscountsAsync(fromd:string,tod:string) 
+{
+  this.GetDecryptedData()
+  let headers = new HttpHeaders();
+  headers.set("Accept", 'application/json');
+  headers.set('Content-Type', 'application/json');
+  headers = headers.set('Authorization', 'Bearer ' + this.decryptiondata); 
+  let options ={ headers: headers };
+  return this.http.get(this.appconfig.url + '/Common/GetBillDiscountsAsync?fromd='+fromd+'&tod='+tod, options)
+  .pipe(    
+    catchError((error: any) => {
+      this.CheckForUnAuthorised(error)
+      // Handle the error here or rethrow it as needed
+      console.error('Error in GetBillDiscountsAsync:', error);
+      return throwError(error); // Rethrow the error
+    })
+  );
+}
 
+
+
+GetLabDiscountApprovalsAsync(fromd:string,tod:string) 
+{
+  this.GetDecryptedData()
+  let headers = new HttpHeaders();
+  headers.set("Accept", 'application/json');
+  headers.set('Content-Type', 'application/json');
+  headers = headers.set('Authorization', 'Bearer ' + this.decryptiondata); 
+  let options ={ headers: headers };
+  return this.http.get(this.appconfig.url + '/Common/GetLabDiscountApprovalsAsync?fromd='+fromd+'&tod='+tod, options)
+  .pipe(    
+    catchError((error: any) => {
+      this.CheckForUnAuthorised(error)
+      // Handle the error here or rethrow it as needed
+      console.error('Error in GetLabDiscountApprovalsAsync:', error);
+      return throwError(error); // Rethrow the error
+    })
+  );
+}
+
+
+
+//op discount approval
+// int requestId, decimal discountAmount, string remarks, decimal discountPercentage
+UpdateOpDiscountAppAsync(du:any) 
+{
+  this.GetDecryptedData()
+  let headers = new HttpHeaders();
+  headers.set("Accept", 'application/json');
+  headers.set('Content-Type', 'application/json');
+  headers = headers.set('Authorization', 'Bearer ' + this.decryptiondata); 
+  let options ={ headers: headers };
+  return this.http.post(this.appconfig.url + '/Common/UpdateOpDiscountAppAsync?',du, options)
+  .pipe(    
+    catchError((error: any) => {
+      this.CheckForUnAuthorised(error)
+      // Handle the error here or rethrow it as needed
+      console.error('Error in UpdateOpDiscountAppAsync:', error);
+      return throwError(error); // Rethrow the error
+    })
+  );
+}
+
+ //op discoutn rejection
+//  int requestId, string approvalRemarks
+ RejectOPDiscountAsync(du:any) 
+{
+  this.GetDecryptedData()
+  let headers = new HttpHeaders();
+  headers.set("Accept", 'application/json');
+  headers.set('Content-Type', 'application/json');
+  headers = headers.set('Authorization', 'Bearer ' + this.decryptiondata); 
+  let options ={ headers: headers };
+  return this.http.post(this.appconfig.url + '/Common/RejectOPDiscountAsync?',du, options)
+  .pipe(    
+    catchError((error: any) => {
+      this.CheckForUnAuthorised(error)
+      // Handle the error here or rethrow it as needed
+      console.error('Error in RejectOPDiscountAsync:', error);
+      return throwError(error); // Rethrow the error
+    })
+  );
+}
+
+// UpdateLbmRequestAsync
+
+
+//Update Biill procedure
+UpdateLbmRequestAsync(du:any) 
+{
+  this.GetDecryptedData()
+  let headers = new HttpHeaders();
+  headers.set("Accept", 'application/json');
+  headers.set('Content-Type', 'application/json');
+  headers = headers.set('Authorization', 'Bearer ' + this.decryptiondata); 
+  let options ={ headers: headers };
+  return this.http.post(this.appconfig.url + '/Common/UpdateLbmRequestAsync',du, options)
+  .pipe(    
+    catchError((error: any) => {
+      this.CheckForUnAuthorised(error)
+      // Handle the error here or rethrow it as needed
+      console.error('Error in UpdateLbmRequestAsync:', error);
+      return throwError(error); // Rethrow the error
+    })
+  );
+}
 }
