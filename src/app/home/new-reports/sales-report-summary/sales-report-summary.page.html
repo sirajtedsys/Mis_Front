@@ -1,0 +1,61 @@
+<div class="appointment-cards">
+  <h4 class="text-center">Sales Report Summary</h4>
+  
+    <form action="#">
+      <div class="leave-body">
+    
+        <div class="leave-date d-flex">
+          <div class="date-speration">
+            <span>From</span>
+    
+    
+            <input type="date" name="check-in" id="check-in" [max]="Today" [(ngModel)]="fromdate" placeholder="From">
+    
+    
+          </div>
+          <div class="date-speration">
+            <span>To</span>
+            <input type="date" name="check-in" id="check-out"[min]="fromdate" [max]="Today" [(ngModel)]="todate" placeholder="To">
+          </div>
+        </div>
+        <div class="leave-submt">
+          <input type="submit" (click)="GetDoctorSummary()" value="Submit">
+        </div>
+        
+      </div>
+   
+    </form>
+  
+  
+  
+    
+    </div>
+
+    <div class="container mt-2" *ngIf="ReportData.length > 0">
+      <table class="table table-bordered table-striped table-hover">
+        <thead>
+       
+          <tr>
+            <th>Doctor</th>
+            <th>Consultation</th>
+            <th>Proc</th>
+            <th>Nursing <br> Procedures</th>
+            <th>Total</th>
+       
+          </tr>
+        </thead>
+        <tbody>
+        
+    
+            <!-- Second loop: Iterate over doctors in each items -->
+            <tr *ngFor="let data of ReportData; let i = index">
+              <td>{{ i + 1 }}</td> <!-- Index of the doctor (1-based) -->
+              <td>{{ data.DOCTOR }}</td>
+              <td>{{ data.PROCEDURES }}</td>
+              <td>{{ data.NURSING_PROCEDURES }}</td>
+              <td>{{ data.TOTAL }}</td>
+            </tr>
+       
+        </tbody>
+      </table>
+    </div>

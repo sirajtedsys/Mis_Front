@@ -35,9 +35,31 @@ const routes: Routes = [
         path: 'p-o-a-details',
         loadChildren: () => import('./p-o-a-details/p-o-a-details.module').then( m => m.POADetailsPageModule)
       },
+      {
+        path: 'sales-report-summary',
+        loadChildren: () => import('./new-reports/sales-report-summary/sales-report-summary.module').then( m => m.SalesReportSummaryPageModule)
+      },
+      {
+        path: 'hospital-collection',
+        loadChildren: () => import('./new-reports/hospital-collection/hospital-collection.module').then( m => m.HospitalCollectionPageModule)
+      },
+      {
+        path: 'op-visit-summary',
+        loadChildren: () => import('./new-reports/op-visit-summary/op-visit-summary.module').then( m => m.OpVisitSummaryPageModule)
+      },
+      {
+        path: 'op-appointment-stats',
+        loadChildren: () => import('./new-reports/op-appointment-stats/op-appointment-stats.module').then( m => m.OpAppointmentStatsPageModule)
+      },
+      {
+        path: 'overview-rep-sum',
+        loadChildren: () => import('./new-reports/overview-rep-sum/overview-rep-sum.module').then( m => m.OverviewRepSumPageModule)
+      },
 
     ]
   },
+  
+
  
 
 

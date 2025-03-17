@@ -1,0 +1,95 @@
+<div class="appointment-cards">
+  <h4 class="text-center">Hospital Collection</h4>
+  
+    <form action="#">
+      <div class="leave-body">
+    
+        <div class="leave-date d-flex">
+          <div class="date-speration">
+            <span>From</span>
+    
+    
+            <input type="date" name="check-in" id="check-in" [max]="Today" [(ngModel)]="fromdate" placeholder="From">
+    
+    
+          </div>
+          <div class="date-speration">
+            <span>To</span>
+            <input type="date" name="check-in" id="check-out"[min]="fromdate" [max]="Today" [(ngModel)]="todate" placeholder="To">
+          </div>
+        </div>
+        <div class="leave-submt">
+          <input type="submit" (click)="GetOnlineCollectionReport()" value="Submit">
+        </div>
+        
+      </div>
+   
+    </form>
+  
+  
+  
+    
+    </div>
+
+    <div class="container mt-2" *ngIf="ReportData.length > 0">
+      <table class="table table-bordered table-striped table-hover">
+        <thead>
+       
+          <tr>
+            <th>Date</th>
+            <th>Cash</th>
+            <th>Wallet</th>
+            <th>Credit Card</th>
+            <th>Cheque</th>
+            <th>Credit</th>
+            <th>Insurance.</th>
+            <th>Net Total</th>
+            <th>Total </th>
+       
+          </tr>
+        </thead>
+        <tbody>
+          <!-- {
+            "OPVISIT_DATE": "2025-02-12T00:00:00",
+            "GROSS": 43010,
+            "CASH": 19970,
+            "CREDIT": 910,
+            "CREDIT_CARD": 6120,
+            "DD": 0,
+            "INSURANCE": 0,
+            "CHEQUE": 0,
+            "DISC": 0,
+            "INS_DISC": 0,
+            "NETAMT": 43010,
+            "REFUND_AMT": 0,
+            "DUE": 0,
+            "B_WALLET": 16010,
+            "VAT": 0,
+            "STAFF_CREDIT": 0,
+            "PKG_DISC": 0,
+            "NOT_COL": 0,
+            "PREV_COL": 0,
+            "CREDIT_BILL": 910,
+            "IP_ADVANCE": 0,
+            "IP_ADVANCE_REFUND": 0,
+            "ADV_SETTLED": 0,
+            "ADV_DEDUCT_AMT": 0,
+            "CUST_CREDIT_AMT": 0
+        } -->
+    
+            <!-- Second loop: Iterate over doctors in each items -->
+            <tr *ngFor="let data of ReportData; let i = index">
+              <td>{{data.OPVISIT_DATE | date:'dd/MM/yyyy' }}</td> <!-- Index of the doctor (1-based) -->
+              <td class="text-end">{{ data.CASH | number:'1.2-2'}}</td>
+              <td class="text-end">{{ data.B_WALLET| number:'1.2-2' }}</td>
+              <td class="text-end">{{ data.CREDIT_CARD| number:'1.2-2' }}</td>
+              <td class="text-end">{{ data.CHEQUE | number:'1.2-2'}}</td>
+              <td class="text-end">{{ data.CREDIT| number:'1.2-2' }}</td>
+              <td class="text-end">{{ data.INSURANCE | number:'1.2-2'}}</td>
+              <td class="text-end">{{ data.NETAMT| number:'1.2-2' }}</td>
+              <td class="text-end">{{ data.GROSS| number:'1.2-2' }}</td>
+            </tr>
+       
+        </tbody>
+      </table>
+    </div>

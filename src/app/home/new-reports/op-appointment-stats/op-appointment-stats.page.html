@@ -1,0 +1,84 @@
+<div class="appointment-cards">
+<h4 class="text-center">Appointment Statistics</h4>
+
+  <form action="#">
+    <div class="leave-body">
+  
+      <div class="leave-date d-flex">
+        <div class="date-speration">
+          <span>From</span>
+  
+  
+          <input type="date" name="check-in" id="check-in" [max]="Today" [(ngModel)]="fromdate" placeholder="From">
+  
+  
+        </div>
+        <div class="date-speration">
+          <span>To</span>
+          <input type="date" name="check-in" id="check-out"[min]="fromdate" [max]="Today" [(ngModel)]="todate" placeholder="To">
+        </div>
+      </div>
+      <div class="leave-submt">
+        <input type="submit" (click)="GetOnlineAppointmentStats()" value="Submit">
+      </div>
+      
+    </div>
+ 
+  </form>
+
+
+
+  
+  </div>
+  <div class="container mt-2" *ngIf="ReportData.length > 0">
+    <table class="table table-bordered table-striped table-hover">
+      <thead>
+        <tr>
+          <th>#</th>
+          <th>Doctor Name</th>
+          <th>Total <br> Token</th>
+          <th colspan="3">New</th>
+          <th colspan="3">Revisit</th>
+          <th colspan="3">Report</th>
+        </tr>
+        <tr>
+          <th></th>
+          <th></th>
+          <th></th>
+          <th>Book</th>
+          <th>Visit</th>
+          <th>PNDG</th>
+          <th>Book</th>
+          <th>Visit</th>
+          <th>PNDG</th>
+          <th>Book</th>
+          <th>Visit</th>
+          <th>PNDG</th>
+        </tr>
+      </thead>
+      <tbody>
+        <ng-container *ngFor="let items of ReportData">
+          <tr>
+            <td colspan="12">{{ items.BK_VISIT_DATE | date: 'dd/MM/yyyy' }}</td>
+          </tr>
+  
+          <!-- Second loop: Iterate over doctors in each items -->
+          <tr *ngFor="let data of items.doctors; let i = index">
+            <td>{{ i + 1 }}</td> <!-- Index of the doctor (1-based) -->
+            <td>{{ data.DOCTOR }}</td>
+            <td>{{ data.TOKEN_TOTAL }}</td>
+            <td>{{ data.NEW_BOOKED }}</td>
+            <td>{{ data.NEW_VISITED }}</td>
+            <td>{{ data.NEW_BOOKED - data.NEW_VISITED }}</td> <!-- Pending = Booked - Visited -->
+            <td>{{ data.REVISIT_BOOKED }}</td>
+            <td>{{ data.REVISIT_VISITED }}</td>
+            <td>{{ data.REVISIT_BOOKED - data.REVISIT_VISITED }}</td> <!-- Pending = Booked - Visited -->
+            <td>{{ data.REPORT_BOOKED }}</td>
+            <td>{{ data.REPORT_VISITED }}</td>
+            <td>{{ data.REPORT_BOOKED - data.REPORT_VISITED }}</td> <!-- Pending = Booked - Visited -->
+          </tr>
+        </ng-container>
+      </tbody>
+    </table>
+  </div>
+  

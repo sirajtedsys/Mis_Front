@@ -1,0 +1,76 @@
+<div class="appointment-cards">
+  <h4 class="text-center">OP Visit Summary</h4>
+  
+    <form action="#">
+      <div class="leave-body">
+    
+        <div class="leave-date d-flex">
+          <div class="date-speration">
+            <span>From</span>
+    
+    
+            <input type="date" name="check-in" id="check-in" [max]="Today" [(ngModel)]="fromdate" placeholder="From">
+    
+    
+          </div>
+          <div class="date-speration">
+            <span>To</span>
+            <input type="date" name="check-in" id="check-out"[min]="fromdate" [max]="Today" [(ngModel)]="todate" placeholder="To">
+          </div>
+        </div>
+        <div class="leave-submt">
+          <input type="submit" (click)="GetOpVisitSummaryReport()" value="Submit">
+        </div>
+        
+      </div>
+   
+    </form>
+  
+  
+  
+    
+    </div>
+
+    <div class="container mt-2" *ngIf="ReportData.length > 0">
+      <table class="table table-bordered table-striped table-hover">
+        <thead>
+       
+          <tr>
+            <th>Sl#</th>
+            <th>Department</th>
+            <th>Doctor</th>
+            <th>New</th>
+            <th>Revisit</th>
+            <th>Free</th>
+            <th>PROC.</th>
+            <th>Total Visit</th>
+       
+          </tr>
+        </thead>
+        <tbody>
+          <!-- {
+            "OPVDTLS_DOCTOR_ID": "UCHM000001",
+            "EMP_OFFL_NAME": "SELF",
+            "OPDP_NAME": "DOCTOR",
+            "AMT": 0,
+            "FREE_NO": 0,
+            "REVISIT_NO": 0,
+            "NEW_NO": 0,
+            "PRC_NO": 42
+        } -->
+    
+            <!-- Second loop: Iterate over doctors in each items -->
+            <tr *ngFor="let data of ReportData; let i = index">
+              <td>{{ i + 1 }}</td> <!-- Index of the doctor (1-based) -->
+              <td>{{ data.OPDP_NAME }}</td>
+              <td>{{ data.EMP_OFFL_NAME }}</td>
+              <td>{{ data.NEW_NO }}</td>
+              <td>{{ data.REVISIT_NO }}</td>
+              <td>{{ data.FREE_NO }}</td>
+              <td>{{ data.PRC_NO }}</td>
+              <td>{{ data.AMT }}</td>
+            </tr>
+       
+        </tbody>
+      </table>
+    </div>
